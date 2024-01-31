@@ -1,7 +1,7 @@
-export default function Page() {
+export default function MainPage() {
     return (
         <>
-          <div>Hello</div>
+          <div>Hello World!!</div>
         </>
     )
 }

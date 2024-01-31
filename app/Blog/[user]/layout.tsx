@@ -22,7 +22,7 @@ export default function UserLayout({
 
     return (
         <div id={"rootPage"} className={"flex flex-col h-[100%]"}>
-            <LayoutHeader navLinks={navLinks}/>
+            <LayoutHeader navLinks={navLinks} />
             <div className={"flex-[1_0_100%]"}>
                 {children}
             </div>

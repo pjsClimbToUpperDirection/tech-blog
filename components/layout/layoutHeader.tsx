@@ -4,9 +4,11 @@ import Link from "next/link";
 import LayoutButton from "./Button/layoutButton";
 import React, {useEffect} from "react";
 
-export default function layoutHeader({navLinks}: {
+export default function layoutHeader({
+    navLinks,
+    }: {
     navLinks: {id: number, list: string, href: string}[]
-}) {
+})  {
     // 컴포넌트가 DOM 에 추가되었을 때 setup 함수(첫번째 인자) 작동
     useEffect(() => {
         window.addEventListener("scroll", () => {

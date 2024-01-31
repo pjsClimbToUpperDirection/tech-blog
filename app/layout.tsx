@@ -1,7 +1,5 @@
 import React from "react";
 import "./globals.css"
-import LayoutHeader from "../components/layout/layoutHeader";
-import LayoutFooter from "../components/layout/layoutFooter";
 
 export const metadata = {
     title: 'is building..',
