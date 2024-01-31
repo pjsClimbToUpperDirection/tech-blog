@@ -1,12 +1,25 @@
+"use client"
+
 import Link from "next/link";
 import LayoutButton from "./Button/layoutButton";
-import React from "react";
+import React, {useEffect} from "react";
 
-export default ({navLinks}: {
+export default function layoutHeader({navLinks}: {
     navLinks: {id: number, list: string, href: string}[]
-}) => {
+}) {
+    // 컴포넌트가 DOM 에 추가되었을 때 setup 함수(첫번째 인자) 작동
+    useEffect(() => {
+        window.addEventListener("scroll", () => {
+            const scrollY = window.scrollY || window.document.documentElement.scrollTop;
+            if (scrollY > 10){
+                window.document.getElementById("headerRoot").style.opacity = "0.5";
+            } else {
+                window.document.getElementById("headerRoot").style.opacity = "1";
+            }
+        })
+    }, []);
     return (
-        <div className={"grid justify-items-center grid-cols-7 bg-slate-100 border-black sticky top-0"}>
+        <div className={"grid justify-items-center grid-cols-7 bg-slate-100 border-black sticky top-0 min-h-[70px]"} id={"headerRoot"}>
             <div className={"p-[5px] w-full col-start-2 col-end-7"}>
                 <div className={"w-full grid grid-cols-5"}>
                     <div className={"text-black col-span-2 grid justify-items-center p-[5px]"}>

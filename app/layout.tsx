@@ -13,11 +13,10 @@ export default function RootLayout({
     }: {
     children: React.ReactNode
 }) {
-    // 현재는 목 데이터를 만들어 놓았으나 api를 통하여 실제 데이터를 가져올 시 형식에 맞게끔 수정 필요
+    // 현재는 목 데이터를 만들어 놓았으나 api 를 통하여 실제 데이터를 가져올 시 형식에 맞게끔 수정 필요
     const navLinks = [
-        { id: 1, list: "1-1", href: ""},
-        { id: 2, list: "3-4", href: ""},
-        { id: 3, list: "3-2", href: ""}
+        { id: 1, list: "sign-out", href: ""},
+        { id: 2, list: "post-New", href: ""},
     ]
 
 
