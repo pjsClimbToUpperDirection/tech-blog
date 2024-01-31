@@ -1,14 +1,14 @@
 import React from "react";
-import "./globals.css"
-import LayoutHeader from "../components/layout/layoutHeader";
-import LayoutFooter from "../components/layout/layoutFooter";
+import "../../globals.css"
+import LayoutHeader from "../../../components/layout/layoutHeader";
+import LayoutFooter from "../../../components/layout/layoutFooter";
 
 export const metadata = {
     title: 'is building..',
     description: 'for my ability',
 }
 
-export default function RootLayout({
+export default function UserLayout({
     children
     }: {
     children: React.ReactNode
@@ -21,10 +21,12 @@ export default function RootLayout({
 
 
     return (
-        <html lang="en" className={"h-[100%]"}>
-        <body className={"h-[100%]"}>
-        {children}
-        </body>
-        </html>
+        <div id={"rootPage"} className={"flex flex-col h-[100%]"}>
+            <LayoutHeader navLinks={navLinks}/>
+            <div className={"flex-[1_0_100%]"}>
+                {children}
+            </div>
+            <LayoutFooter/>
+        </div>
     )
 }
