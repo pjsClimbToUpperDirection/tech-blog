@@ -20,7 +20,7 @@ export default function RootLayout({
 
     return (
         <html lang="en" className={"h-[100%]"}>
-        <body className={"h-[100%]"}>
+        <body className={"h-[100%] min-h-[1000px]"}>
         {children}
         </body>
         </html>

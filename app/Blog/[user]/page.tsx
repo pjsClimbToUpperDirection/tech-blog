@@ -1,7 +1,7 @@
-export default function UserPage() {
+export default function UserPage(props) {
     return (
         <>
-          <div>Hello</div>
+          <div>{props.params.user}</div>
         </>
     )
 }

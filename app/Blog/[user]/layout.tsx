@@ -19,7 +19,6 @@ export default function UserLayout({
         { id: 2, list: "post-New", href: ""},
     ]
 
-
     return (
         <div id={"rootPage"} className={"flex flex-col h-[100%]"}>
             <LayoutHeader navLinks={navLinks} />
