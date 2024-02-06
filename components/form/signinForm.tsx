@@ -1,34 +1,16 @@
-export default function SigninForm({ tailwindClassName } : { tailwindClassName: string}) {
+import typeWriter from "../animation/typewriter";
+import instructionForSubmit from "./instructionAnimation/instructionForSubmit";
 
-    let passcodeArea = 0;
-    const cleaner = (text: string) => {
-        const animatedText = document.getElementById('title');
-        animatedText.addEventListener("click", () => {alert("submitted")}) // 로그인 양식 제출 로직 작성
-        if (passcodeArea == 0){
-            animatedText.innerHTML = ""
-            typeWriter(text, 0, animatedText);
-        }
-        passcodeArea = 1;
-    }
-    const typeWriter = (text: string, index: number, element: HTMLElement)=> {
-        if (index < text.length) {
-            element.innerHTML += text.charAt(index);
-            index++;
-            // 30ms 마다 typeWriter 함수를 재귀적으로 호출
-            setTimeout(function() {
-                typeWriter(text, index, element);
-            }, 30);
-        }
-    }
-
+export default function SignInForm({ rootElement } : { rootElement: string | null}) {
+    let done = 0; // 스크립트의 반복 동작을 피하고자 일부러 side Effect 유발
     return (
-        <div id={"signinForm"}
-             className={"min-h-[1000px] h-full w-full grid grid-cols-4 grid-rows-7 bg-amber-100 p-[10px] absolute " + tailwindClassName}>
+        <div id={"signInForm"}
+             className={"h-[1720px] w-full grid justify-items-center bg-white p-[10px] absolute " + rootElement}>
             <div
-                className={"p-[5px] w-full col-start-2 col-end-4 row-start-3 row-end-5 grid grid-rows-4 bg-slate-300 m-[5px] rounded"}>
+                className={"p-[5px] w-full lg:w-[1024px] h-[208px] fixed top-[230px] grid grid-rows-4 bg-slate-300 m-[5px] rounded"}>
                 <div className={"grid content-center"}>
-                    <h2 className={"row-start-1 row-end-2 text-2xl p-[5px] indent-[10px]"}
-                        id={"title"} onClick={() => cleaner("자동완성 기능 사용 시 본 문구를 다시 클릭하여 로그인 시도")}>
+                    <h2 className={"row-start-1 row-end-2 text-xl  p-[5px] indent-[10px]"}
+                        id={"title"} onClick={() => done = instructionForSubmit("자동완성 기능 사용 시 본 문구를 다시 클릭하여 로그인 시도", "자동완성 기능 사용 시 본 문구를 다시 클릭", done)}>
                         하단에 적절한 양식을 작성하여 로그인
                     </h2>
                 </div>
@@ -39,7 +21,7 @@ export default function SigninForm({ tailwindClassName } : { tailwindClassName: 
                     </div>
                     <div className={"grid items-center m-[5px] px-[10px]"}>
                         <input type={"password"} name={"userPassword"} id={"userPassword"}
-                               onFocus={() => cleaner("암호 입력 후 본 문구를 클릭하여 로그인 시도")} placeholder={"비밀번호"}
+                               onFocus={() => done = instructionForSubmit("암호 입력 후 본 문구를 클릭하여 로그인 시도", null, done)} placeholder={"비밀번호"}
                                className={"w-full h-full rounded indent-[10px]"}/>
                     </div>
                 </div>

@@ -1,0 +1,20 @@
+#AnimatedElement {
+    animation-duration: 4s;
+    animation-name: slideIn;
+}
+
+@keyframes slideIn {
+    from {
+        margin-left: 100%;
+    }
+
+    75% {
+        margin-left: 10%;
+        width: 80%;
+    }
+
+    to {
+        margin-left: 0;
+        width: 50%;
+    }
+}
