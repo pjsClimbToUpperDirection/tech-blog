@@ -1,11 +1,10 @@
-import typeWriter from "../animation/typewriter";
 import instructionForSubmit from "./instructionAnimation/instructionForSubmit";
 
 export default function SignInForm({ rootElement } : { rootElement: string | null}) {
     let done = 0; // 스크립트의 반복 동작을 피하고자 일부러 side Effect 유발
     return (
         <div id={"signInForm"}
-             className={"h-[1720px] w-full grid justify-items-center bg-white p-[10px] absolute " + rootElement}>
+             className={"h-[100%] w-full grid justify-items-center bg-white p-[10px] absolute " + rootElement}>
             <div
                 className={"p-[5px] w-full lg:w-[1024px] h-[208px] fixed top-[230px] grid grid-rows-4 bg-slate-300 m-[5px] rounded"}>
                 <div className={"grid content-center"}>

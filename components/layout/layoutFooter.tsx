@@ -24,7 +24,7 @@ export default function layoutFooter() {
         })
     }, []);
     return (
-        <div className={"grid justify-items-center grid-cols-7 bg-slate-100 border-black bottom-0 sticky min-h-[70px]"} id={"footerRoot"}>
+        <div className={"grid justify-items-center grid-cols-7 bg-slate-100 border-black bottom-0 sticky h-[70px]"} id={"footerRoot"}>
             <div className={"p-[5px] w-full col-start-2 col-end-7"}>
                 <div className={"w-full grid grid-cols-5"}>
 

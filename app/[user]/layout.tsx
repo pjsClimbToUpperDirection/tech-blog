@@ -1,7 +1,7 @@
 import React from "react";
-import "../../globals.css"
-import LayoutHeader from "../../../components/layout/layoutHeader";
-import LayoutFooter from "../../../components/layout/layoutFooter";
+import "../globals.css"
+import LayoutHeader from "../../components/layout/layoutHeader";
+import LayoutFooter from "../../components/layout/layoutFooter";
 
 export const metadata = {
     title: 'is building..',
@@ -22,7 +22,7 @@ export default function UserLayout({
     return (
         <div id={"rootPage"} className={"flex flex-col h-[100%]"}>
             <LayoutHeader navLinks={navLinks} />
-            <div className={"flex-[1_0_100%]"}>
+            <div className={"flex-[1_1_100%]"}>
                 {children}
             </div>
             <LayoutFooter/>
