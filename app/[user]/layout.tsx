@@ -9,20 +9,22 @@ export const metadata = {
 }
 
 export default function UserLayout({
-    children
+    children,
+    params
     }: {
-    children: React.ReactNode
+    children: React.ReactNode,
+    params: { user: string }
 }) {
-    // 현재는 목 데이터를 만들어 놓았으나 api 를 통하여 실제 데이터를 가져올 시 형식에 맞게끔 수정 필요
+    // 로그아웃 시 토큰 만료를 위해 필요한 요청을 포함하도록 구성할 필요
     const navLinks = [
-        { id: 1, list: "sign-out", href: ""},
+        { id: 1, list: "sign-out", href: "/"},
         { id: 2, list: "post-New", href: ""},
     ]
 
     return (
-        <div id={"rootPage"} className={"flex flex-col h-[100%]"}>
-            <LayoutHeader navLinks={navLinks} />
-            <div className={"flex-[1_1_100%]"}>
+        <div id={"rootPage"} className={"flex flex-col flex-auto"}>
+            <LayoutHeader navLinks={navLinks} user={params.user}/>
+            <div className={"flex-auto"}>
                 {children}
             </div>
             <LayoutFooter/>

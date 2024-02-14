@@ -1,7 +1,7 @@
 import instructionForSubmit from "./instructionAnimation/instructionForSubmit";
 
 export default function SignInForm({ rootElement } : { rootElement: string | null}) {
-    let done = 0; // 스크립트의 반복 동작을 피하고자 일부러 side Effect 유발
+    let done = 0; // 스크립트의 반복 동작을 피하고자 일부러 side Effect 유발, 하나의 로그인 폼 내에서 지시 문구는 한번만 활성화된다.
     return (
         <div id={"signInForm"}
              className={"h-[100%] w-full grid justify-items-center bg-white p-[10px] absolute " + rootElement}>

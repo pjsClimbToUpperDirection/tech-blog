@@ -1,26 +1,17 @@
-import Detail from "../../components/PostList/detail/detail"
+import ListPage from "../../components/PostList/ListPage/listPage"
 
-export default function UserPage(props) {
-    // key값 명시 필요
+export default function UserPage({ params }: { params: { user: string} }) {
+
     const PostList = [
-        { id: 1, writer: "me", email: "who@naver.com", title: "first", content: "somethingOne", created_date: "24-02-07", updated_date: null},
-        { id: 2, writer: "me2", email: "who@naver.com", title: "first", content: "something", created_date: "24-02-07", updated_date: null},
-        { id: 3, writer: "me3", email: "who@naver.com", title: "first", content: "something", created_date: "24-02-07", updated_date: null},
-        { id: 4, writer: "me", email: "who@naver.com", title: "first", content: "something", created_date: "24-02-07", updated_date: null},
-        { id: 5, writer: "me", email: "who@naver.com", title: "first", content: "something", created_date: "24-02-07", updated_date: null},
+        { id: 1, writer: "me1", email: "who@naver.com", title: "first123456789012345678", content: "somethingOne", created_date: "24-02-07", updated_date: null},
+        { id: 2, writer: "me2", email: "who@naver.com", title: "second", content: "something", created_date: "24-02-07", updated_date: null},
+        { id: 3, writer: "me3", email: "who@naver.com", title: "third", content: "something", created_date: "24-02-07", updated_date: null},
+        { id: 4, writer: "me4", email: "who@naver.com", title: "four", content: "something", created_date: "24-02-07", updated_date: null},
+        { id: 5, writer: "me5", email: "who@naver.com", title: "five", content: "something", created_date: "24-02-07", updated_date: null},
     ]
     return (
-        <>
-          <div className={"w-full h-[1110px]"}>
-              <div className={"w-full h-[1060px] grid grid-cols-6"}>
-                  <div className={"col-start-2 col-end-6 h-[1060px] grid grid-rows-5 py-[5px]"}>
-                      {PostList.map((eachPost) => (
-                          <Detail postInfo={eachPost} key={eachPost.id}/>
-                      ))}
-                  </div>
-              </div>
-              <div className={"w-full h-[50px]"}>다음 항목</div>
-          </div>
-        </>
-    )
+        <div className={"w-full flex flex-col"}>
+            <ListPage PostList={PostList} params={params}/>
+        </div>
+)
 }

@@ -6,8 +6,10 @@ import React, {useEffect} from "react";
 
 export default function layoutHeader({
     navLinks,
+    user
     }: {
-    navLinks: {id: number, list: string, href: string}[]
+    navLinks: {id: number, list: string, href: string}[],
+    user: string
 })  {
     // 컴포넌트가 DOM 에 추가되었을 때 setup 함수(첫번째 인자) 작동
     useEffect(() => {
@@ -21,17 +23,17 @@ export default function layoutHeader({
         })
     }, []);
     return (
-        <div className={"grid justify-items-center grid-cols-7 bg-slate-100 border-black sticky top-0 h-[70px]"} id={"headerRoot"}>
+        <div className={"grid justify-items-center grid-cols-7 bg-slate-100 border-black sticky top-0 h-[130px]  md:h-[70px]"} id={"headerRoot"}>
             <div className={"p-[5px] w-full col-start-2 col-end-7"}>
-                <div className={"w-full grid grid-cols-5"}>
-                    <div className={"text-black col-span-2 grid justify-items-center p-[5px]"}>
-                        <Link href="/" className={"text-[30px] font-bold"}>
-                            Tech blog
+                <div className={"w-full grid  md:grid-cols-5 max-md:grid-rows-2"}>
+                    <div className={"text-black grid justify-items-center p-[5px]  md:col-span-2"}>
+                        <Link href={`/${user}`} className={"text-[30px] font-bold"}>
+                            {user}
                         </Link>
                     </div>
-                    <div className={"col-span-3 p-[5px]"}>
+                    <div className={"md:col-span-3 p-[5px]"}>
                         <div className={"px-[50px] py-[10px]"}>
-                            <ul className={"flex flex-row-reverse justify-start"}>
+                            <ul className={"flex flex-row-reverse justify-center md:justify-start"}>
                                 {navLinks.map((each) => (
                                     <LayoutButton key={each.id} customClass={"p-[2px] px-[10px] min-w-[42px]"}
                                                   href={each.href}>{each.list}</LayoutButton>

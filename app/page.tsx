@@ -1,6 +1,5 @@
 import Form from "../components/root/form"
 export default function MainPage() {
-
     // todo 추후 검색엔진 최적화 구현하기
     return (
         <>
