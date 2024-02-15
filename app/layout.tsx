@@ -1,5 +1,5 @@
 import React from "react";
-import "./globals.css"
+import "../components/globals.css"
 
 export const metadata = {
     title: 'is building..',
@@ -11,9 +11,10 @@ export default function RootLayout({
     }: {
     children: React.ReactNode
 }) {
+    // body 태그의 배경색을 slate-900으로 설정함으로서 끝단 스크롤 시 흰색 바탕 노출을 방지
     return (
         <html lang="en">
-        <body>
+        <body className={"bg-black"}>
             {children}
         </body>
         </html>

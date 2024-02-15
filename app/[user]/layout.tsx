@@ -1,5 +1,5 @@
 import React from "react";
-import "../globals.css"
+import "../../components/globals.css"
 import LayoutHeader from "../../components/layout/layoutHeader";
 import LayoutFooter from "../../components/layout/layoutFooter";
 
@@ -22,7 +22,7 @@ export default function UserLayout({
     ]
 
     return (
-        <div id={"rootPage"} className={"flex flex-col flex-auto"}>
+        <div id={"rootPage"} className={"w-full h-[1200px] flex flex-col flex-auto"}>
             <LayoutHeader navLinks={navLinks} user={params.user}/>
             <div className={"flex-auto"}>
                 {children}
