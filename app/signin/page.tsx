@@ -5,7 +5,7 @@ export default function signIn() {
     return (
         <>
             <div className={"grid justify-items-center h-screen min-h-[730px]"}>
-                <div className={"w-full sm:w-[540px] bg-black fixed top-[170px] h-[400px] z-20 grid grid-rows-5 rounded px-[40px] border-2 border-slate-100"}>
+                <div className={"w-full sm:w-[540px] bg-black fixed top-[130px] h-[400px] z-20 grid grid-rows-5 rounded px-[40px] sm:border-2 border-slate-100"}>
                     <div className={"row-span-4 grid grid-rows-5"}>
                         <div className={"row-span-1 grid content-center text-slate-300"}>
                             <p>기술 블로그에 로그인</p>
