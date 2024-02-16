@@ -1,5 +1,6 @@
 import React from "react";
 import "../components/globals.css"
+import "../components/input.css"
 
 export const metadata = {
     title: 'is building..',

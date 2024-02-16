@@ -11,10 +11,10 @@ export default function ({ params }: { params: { title: string }}) {
 
     const thisIs = PostList.find(post => post.title == params.title)
     return (
-        <div className={"w-full flex-auto"}>
+        <div className={"w-full flex-auto text-gray-200"}>
             <div className={"w-full grid grid-cols-6"}>
                 <div className={"col-start-2 col-end-6"}>
-                    <div className={"h-[90px] p-2 border-b-2 border-gray-100 grid content-end justify-center"}>
+                    <div className={"h-[90px] p-2 border-b-2 border-gray-200 grid content-end justify-center"}>
                         <h2 className={"text-[28px] font-bold"}>{params.title.length > 20 ? (
                                 <p>{params.title.substring(0, 20)}...</p>
                             ):(
@@ -22,7 +22,7 @@ export default function ({ params }: { params: { title: string }}) {
                             )}</h2>
                     </div>
                     <div className={"h-[40px] my-[5px] flex items-center"}>
-                        <p className={"border-b-2 border-gray-100"}>
+                        <p className={"border-b-2 border-gray-200"}>
                             최종 작성일: {thisIs.updated_date != null ? thisIs.updated_date : thisIs.created_date}
                         </p>
                     </div>

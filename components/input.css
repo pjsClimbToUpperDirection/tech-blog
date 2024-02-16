@@ -1,16 +1,16 @@
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
+.inputElement:-webkit-autofill,
+.inputElement:-webkit-autofill:hover,
+.inputElement:-webkit-autofill:focus,
+.inputElement:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s !important;
     -webkit-text-fill-color: white;
     outline: none;
     color: white;
 }
 
-input {
+.inputElement {
     color: white;
 }
-input:focus {
+.inputElement:focus {
     outline: none;
 }

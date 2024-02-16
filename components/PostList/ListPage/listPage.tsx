@@ -11,7 +11,7 @@ export default function listPage({
         <>
             <div className={"w-full h-full grid xl:grid-cols-6 max-2xl:justify-items-center"}>
                 <div
-                    className={"col-span-6 h-full grid grid-cols-2 grid-rows-4 py-[5px] max-lg:w-full max-2xl:w-[1024px]  2xl:col-start-2 2xl:col-end-6"}>
+                    className={"col-span-6 h-fit grid grid-cols-1 md:grid-cols-2 grid-rows-4 py-[5px] max-lg:w-full max-2xl:w-[1024px]  2xl:col-start-2 2xl:col-end-6"}>
                     {PostList.map((eachPost) => (
                         <Detail key={eachPost.id} postInfo={eachPost} maxTitleLength={10} maxContentLength={25} user={params.user}/>
                     ))}
