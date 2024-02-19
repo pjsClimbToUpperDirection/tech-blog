@@ -15,7 +15,7 @@ export default function Detail({
         <div
             className={"col-span-1 p-[5px] m-[5px] border-[5px] border-gray-600 rounded-3xl h-[180px]"}>
             <Link href={`/${user}/${postInfo.title}`} prefetch={false} className={"px-10 grid grid-rows-5"}>
-                <h2 className={"row-span-1 grid justify-items-center m-[2px] border-b-[4px] border-gray-600 text-gray-200"}
+                <h2 className={"row-span-1 w-fit grid justify-items-start m-[2px] border-b-[2px] border-gray-600 text-gray-200 px-[30px]"}
                     id={postInfo.id.toString()}>
                     {postInfo.title.length > maxTitleLength ? (
                         <p>{postInfo.title.substring(0, maxTitleLength)}...</p>

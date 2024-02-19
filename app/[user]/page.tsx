@@ -1,4 +1,4 @@
-import ListPage from "../../components/PostList/ListPage/listPage"
+import Detail from "../../components/PostList/detail/detail";
 
 export default function UserPage({ params }: { params: { user: string} }) {
 
@@ -10,8 +10,16 @@ export default function UserPage({ params }: { params: { user: string} }) {
         { id: 5, writer: "me5", email: "who@naver.com", title: "five", content: "something", created_date: "24-02-07", updated_date: null},
     ]
     return (
-        <div className={"w-full flex flex-col"}>
-            <ListPage PostList={PostList} params={params}/>
+        <div className={"w-full h-fit flex flex-col flex-auto"}>
+            <div className={"w-full h-full flex justify-center"}>
+                <div
+                    className={"w-[1100px] h-fit grid grid-cols-1 grid-rows-11 py-[5px] max-lg:w-full max-2xl:w-[1024px]  2xl:col-start-2 2xl:col-end-6"}>
+                    {PostList.map((eachPost) => (
+                        <Detail key={eachPost.id} postInfo={eachPost} maxTitleLength={10} maxContentLength={25}
+                                user={params.user}/>
+                    ))}
+                </div>
+            </div>
         </div>
-)
+    )
 }

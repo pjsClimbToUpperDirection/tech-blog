@@ -22,11 +22,9 @@ export default function UserLayout({
     ]
 
     return (
-        <div id={"rootPage"} className={"w-full h-[1200px] flex flex-col flex-auto"}>
+        <div id={"rootPage"} className={"w-full h-fit flex flex-col flex-auto"}>
             <LayoutHeader navLinks={navLinks} user={params.user}/>
-            <div className={"flex-auto"}>
                 {children}
-            </div>
             <LayoutFooter/>
         </div>
     )
