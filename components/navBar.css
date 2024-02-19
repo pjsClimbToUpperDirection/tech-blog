@@ -1,0 +1,31 @@
+#lined {
+    animation-duration: 0.5s;
+    animation-name: lined;
+    width: 100%;
+}
+
+@keyframes lined {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+#erased {
+    animation-duration: 0.5s;
+    animation-name: erased;
+    width: 0;
+}
+
+@keyframes erased {
+    from {
+        width: 100%;
+    }
+
+    to {
+        width: 0;
+    }
+}

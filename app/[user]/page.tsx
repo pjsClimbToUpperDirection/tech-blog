@@ -13,7 +13,7 @@ export default function UserPage({ params }: { params: { user: string} }) {
         <div className={"w-full h-fit flex flex-col flex-auto"}>
             <div className={"w-full h-full flex justify-center"}>
                 <div
-                    className={"w-[1100px] h-fit grid grid-cols-1 grid-rows-11 py-[5px] max-lg:w-full max-2xl:w-[1024px]  2xl:col-start-2 2xl:col-end-6"}>
+                    className={"max-sm:max-w-[400px] h-fit grid grid-cols-1 grid-rows-11 py-[5px]  sm:w-[400px] lg:w-[500px] 2xl:col-start-2 2xl:col-end-6"}>
                     {PostList.map((eachPost) => (
                         <Detail key={eachPost.id} postInfo={eachPost} maxTitleLength={10} maxContentLength={25}
                                 user={params.user}/>
