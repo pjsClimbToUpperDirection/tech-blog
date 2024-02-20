@@ -11,7 +11,7 @@ export default function ({ params }: { params: { title: string }}) {
 
     const thisIs = PostList.find(post => post.title == params.title)
     return (
-        <div className={"w-full flex-auto text-gray-200"}>
+        <div className={"text-gray-200 absolute top-[70px] w-full h-[2100px] flex flex-col flex-auto bg-black z-10"}>
             <div className={"w-full grid grid-cols-6"}>
                 <div className={"col-start-2 col-end-6"}>
                     <div className={"h-[90px] p-2 border-b-2 border-gray-200 grid content-end justify-center"}>

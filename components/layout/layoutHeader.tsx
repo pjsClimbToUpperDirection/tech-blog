@@ -23,7 +23,7 @@ export default function layoutHeader({
     return (
         <>
             <div
-                className={"w-full grid justify-items-center grid-cols-7 bg-black border-black fixed top-0 h-[70px] content-center text-gray-200"}
+                className={"w-full grid justify-items-center grid-cols-7 bg-black border-black fixed top-0 h-[70px] content-center text-gray-200 z-30"}
                 id={"headerRoot"}>
                 <div className={"p-[5px] w-full col-span-7 md:col-start-2 md:col-end-7"}>
                     <div className={"w-full h-[60px] md:h-[70px] grid grid-cols-4 md:grid-cols-5"}>

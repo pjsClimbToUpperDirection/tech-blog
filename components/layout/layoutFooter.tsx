@@ -39,7 +39,7 @@ export default function layoutFooter() {
         })
     }, []);
     return (
-        <div className={"w-full grid justify-items-center bg-black border-black bottom-0 fixed opacity-50 min-h-[50px] md:min-h-[70px]"}
+        <div className={"w-full grid justify-items-center bg-black border-black bottom-0 fixed opacity-50 min-h-[50px] md:min-h-[70px] z-30"}
              id={"footerRoot"}>
             <div className={"text-gray-200 grid content-center grid-rows-1 p-[5px] h-fit"}>
                 <span id={"text"}></span> <Link id={"link"} href={"https://nextjs.org/"} className={"text-blue-200 h-full"}></Link>

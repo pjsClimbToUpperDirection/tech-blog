@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Detail({
+export default function summary({
     postInfo,
     maxTitleLength,
     maxContentLength,
@@ -10,7 +10,7 @@ export default function Detail({
     maxTitleLength: number,
     maxContentLength: number,
     user: string,
-    }) {
+}) {
     return (
         <div
             className={"col-span-1 p-[5px] m-[5px] border-[5px] border-gray-600 rounded-3xl h-[180px]"}>

@@ -8,19 +8,17 @@ export default function navBar() {
     function activate() {
         const lineTwo = document.getElementById("navBar").children[1];
         const lineFour = document.getElementById("navBar").children[3];
-
-        const main = document.getElementById("main");
+        const menuBar = document.getElementById("menuBar");
         if (status == 0) {
             lineTwo.id = "lined"
             lineFour.id = "lined"
             status = 1
-            previousHTML = main.innerHTML;
-            main.innerHTML = "'" + MenuBar() + "'"
+            menuBar.style.zIndex = "20"
         } else {
             lineTwo.id = "erased"
             lineFour.id = "erased"
             status = 0
-            main.innerHTML = previousHTML;
+            menuBar.style.zIndex = "0"
         }
     }
     return (
