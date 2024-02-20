@@ -1,6 +1,6 @@
 export default function Page() {
     return (
-        <div className={"w-full h-full bg-slate-900 z-20"}>
+        <div className={"absolute top-[70px] w-full h-[2100px] flex flex-col flex-auto bg-black z-10"}>
 
         </div>
     )

@@ -1,23 +1,21 @@
 import React from "react";
 import "../navBar.css"
-import MenuBar from "../layout/menuBar"
 
 export default function navBar() {
-    let status = 0;
-    let previousHTML: string;
+    let innerStatus = 0;
     function activate() {
         const lineTwo = document.getElementById("navBar").children[1];
         const lineFour = document.getElementById("navBar").children[3];
         const menuBar = document.getElementById("menuBar");
-        if (status == 0) {
+        if (innerStatus == 0) {
             lineTwo.id = "lined"
             lineFour.id = "lined"
-            status = 1
+            innerStatus = 1
             menuBar.style.zIndex = "20"
         } else {
             lineTwo.id = "erased"
             lineFour.id = "erased"
-            status = 0
+            innerStatus = 0
             menuBar.style.zIndex = "0"
         }
     }
