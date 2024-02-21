@@ -21,9 +21,9 @@ export default function navBar() {
     }
     return (
         <div id={"navBar"} className={"w-fit h-fit"} onClick={activate}>
-            <div className={"w-[20px] h-[5px] border-b-2 border-white"}/>
+            <div className={"w-[30px] h-[5px] border-b-2 border-white"}/>
             <div className={"w-0 h-[5px] border-b-2 border-white"}/>
-            <div className={"w-[20px] h-[5px] border-b-2 border-white"}/>
+            <div className={"w-[30px] h-[5px] border-b-2 border-white"}/>
             <div className={"w-0 h-[5px] border-b-2 border-white"}/>
         </div>
     )

@@ -23,17 +23,17 @@ export default function layoutHeader({
     return (
         <>
             <div
-                className={"w-full grid justify-items-center grid-cols-7 bg-black border-black fixed top-0 h-[70px] content-center text-gray-200 z-30"}
+                className={"w-full flex justify-center bg-black border-black fixed top-0 h-[70px] content-center text-gray-200 z-30"}
                 id={"headerRoot"}>
-                <div className={"p-[5px] w-full col-span-7 md:col-start-2 md:col-end-7"}>
-                    <div className={"w-full h-[60px] md:h-[70px] grid grid-cols-4 md:grid-cols-5"}>
-                        <div className={"grid justify-items-center p-[5px] col-span-2 md:col-span-1"}>
+                <div className={"p-[5px] w-full max-sm:max-w-[400px] h-fit py-[5px]  sm:w-[450px] lg:w-[550px]"}>
+                    <div id={"headerMenuBar"} className={"w-full h-[70px] flex justify-between"}>
+                        <div className={"w-[100px] p-[5px] flex justify-center"}>
                             <Link href={`/${user}`} className={"text-[30px] font-bold"}>
                                 {user}
                             </Link>
                         </div>
                         <div
-                            className={"col-start-4  md:col-start-5  p-[5px] grid justify-items-center content-center max-sm:pr-[40px]"}>
+                            className={"w-[80px] p-[5px] grid justify-center content-center"}>
                             <NavBar/>
                         </div>
                     </div>
