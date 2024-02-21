@@ -3,6 +3,7 @@
 import Link from "next/link";
 import React, {useEffect} from "react";
 import NavBar from "../button/navBar"
+import "../headerBar.css"
 
 export default function layoutHeader({
     user
@@ -11,22 +12,37 @@ export default function layoutHeader({
 })  {
     // 컴포넌트가 DOM 에 추가되었을 때 setup 함수(첫번째 인자) 작동
     useEffect(() => {
+        const headerBar = document.getElementById("headerBar");
+        const headerRoot = document.getElementById("headerRoot");
         window.addEventListener("scroll", () => {
             const scrollY = window.scrollY || window.document.documentElement.scrollTop;
             if (scrollY > 10){
-                window.document.getElementById("headerRoot").style.opacity = "0.5";
+                if (window.innerWidth > 1023) {
+                    headerBar.id = "yieldForLarge"
+                } else if (window.innerWidth > 639) {
+                    headerBar.id = "yieldForSmall"
+                } else {
+                    headerBar.id = "mergeForMini"
+                }
+                headerRoot.style.opacity = "0.5"
             } else {
-                window.document.getElementById("headerRoot").style.opacity = "1";
+                if (window.innerWidth > 1023) {
+                    headerBar.id = "mergeForLarge"
+                } else if (window.innerWidth > 639) {
+                    headerBar.id = "mergeForSmall"
+                } else {
+                    headerBar.id = "yieldForMini"
+                }
+                headerRoot.style.opacity = "1"
             }
         })
     }, []);
     return (
         <>
-            <div
-                className={"w-full flex justify-center bg-black border-black fixed top-0 h-[70px] content-center text-gray-200 z-30"}
-                id={"headerRoot"}>
-                <div className={"p-[5px] w-full max-sm:max-w-[400px] h-fit py-[5px]  sm:w-[450px] lg:w-[550px]"}>
-                    <div id={"headerMenuBar"} className={"w-full h-[70px] flex justify-between"}>
+            <div id={"headerRoot"}
+                className={"w-full flex justify-center bg-black border-black fixed top-0 h-[70px] content-center text-gray-200 z-30"}>
+                <div id={"headerBar"} className={"p-[5px] w-full max-sm:w-[100%] h-fit py-[5px]  sm:w-[450px] lg:w-[550px]"}>
+                    <div className={"w-full h-[70px] flex justify-between"}>
                         <div className={"w-[100px] p-[5px] flex justify-center"}>
                             <Link href={`/${user}`} className={"text-[30px] font-bold"}>
                                 {user}

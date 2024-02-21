@@ -7,15 +7,49 @@ export default function layoutFooter() {
 
     // 컴포넌트가 DOM 에 추가되었을 때 setup 함수(첫번째 인자) 작동
     useEffect(() => {
-        function variableInnerText( width: number ) {
+        const textArea = document.getElementById("text");
+        const linkArea = document.getElementById("link");
+
+        let text1: string;
+        let text2: string;
+
+        let index1 = 0;
+        let index2 = 0;
+
+        let previousY = 0;
+
+        let latch = 0;
+        function variableInnerText(width: number) {
             if (width < 768) {
-                document.getElementById("text").innerText = "";
-                document.getElementById("link").innerText = "클릭하여 마저 탐색하기..."
+                text1 = "";
+                text2 = "클릭하여 마저 탐색하기..."
             } else {
-                document.getElementById("text").innerText = "본 게시글은 개발자 본인이 배운 내용을 기록하여 본인의 역량 발전에 기여하고자 작성하는 글입니다.";
-                document.getElementById("link").innerText = "마저 탐색하기..."
+                text1 = "본 게시글은 개발자 본인이 배운 내용을 기록하여 본인의 역량 발전에 기여하고자 작성하는 글입니다.";
+                text2 = "마저 탐색하기..."
             }
         }
+
+        function typing(scY: number) {
+            if (scY > previousY + 10) {
+                if (latch > 1) {
+                    if (index1 != text1.length) {
+                        textArea.textContent += text1[index1]
+                        index1++
+                        previousY = scY;
+                    }
+                    else {
+                        if (index2 != text2.length) {
+                            linkArea.textContent += text2[index2]
+                            index2++
+                            previousY = scY;
+                        }
+                    }
+                    latch = 0
+                }
+                latch += 1;
+            }
+        }
+
 
         variableInnerText(window.innerWidth)
         window.addEventListener("scroll", () => {
@@ -33,6 +67,7 @@ export default function layoutFooter() {
             } else {
                 window.document.getElementById("footerRoot").style.opacity = "0.5";
             }
+            typing(scrollY)
         })
         window.addEventListener("resize", () => {
             variableInnerText(window.innerWidth)

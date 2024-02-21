@@ -1,4 +1,93 @@
-#headerMenuBar {
-    animation-duration: 0.5s;
-    animation-name: lined;
+#mergeForMini {
+    animation-duration: 0.3s;
+    animation-name: mergeForMini;
+    width: 70%;
+}
+@keyframes mergeForMini {
+    from {
+        width: 100%;
+    }
+    to {
+        width: 70%
+    }
+}
+
+
+
+#yieldForSmall {
+    animation-duration: 0.3s;
+    animation-name: yieldForSmall;
+    width: 650px;
+}
+@keyframes yieldForSmall {
+    from {
+        width: 450px;
+    }
+    to {
+        width: 650px;
+    }
+}
+
+#yieldForLarge {
+    animation-duration: 0.3s;
+    animation-name: yieldForLarge;
+    width: 750px;
+}
+@keyframes yieldForLarge {
+    from {
+        width: 550px;
+    }
+    to {
+        width: 750px;
+    }
+}
+
+
+
+
+
+
+#yieldForMini {
+    animation-duration: 0.3s;
+    animation-name: yieldForMini;
+    width: 100%;
+}
+@keyframes yieldForMini {
+    from {
+        width: 70%;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+
+
+#mergeForSmall {
+    animation-duration: 0.3s;
+    animation-name: mergeForSmall;
+    width: 450px;
+}
+@keyframes mergeForSmall {
+    from {
+        width: 650px;
+    }
+    to {
+        width: 450px;
+    }
+}
+
+#mergeForLarge {
+    animation-duration: 0.3s;
+    animation-name: mergeForLarge;
+    width: 550px;
+}
+
+@keyframes mergeForLarge {
+    from {
+        width: 750px;
+    }
+    to {
+        width: 550px;
+    }
 }
