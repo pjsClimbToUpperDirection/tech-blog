@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, {useEffect} from "react";
 import NavBar from "../button/navBar"
 import "../headerBar.css"
+import close from "./close";
 
 export default function layoutHeader({
     user
@@ -44,7 +45,7 @@ export default function layoutHeader({
                 <div id={"headerBar"} className={"p-[5px] w-full max-sm:w-[100%] h-fit py-[5px]  sm:w-[450px] lg:w-[550px]"}>
                     <div className={"w-full h-[70px] flex justify-between"}>
                         <div className={"w-[100px] p-[5px] flex justify-center"}>
-                            <Link href={`/${user}`} className={"text-[30px] font-bold"}>
+                            <Link href={`/${user}/1`} className={"text-[30px] font-bold"} onClick={close}>
                                 {user}
                             </Link>
                         </div>

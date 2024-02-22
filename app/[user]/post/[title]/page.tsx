@@ -1,4 +1,4 @@
-export default function ({ params }: { params: { title: string }}) {
+export default function Specific({ params }: { params: { title: string }}) {
     // 사용자 게시글 목록에서 데이터를 fetch 한 이후 기본적으로 캐시되므로 캐시된 데이터를 전부 호출한 뒤 조건문으로 걸러내는 전제로 진행
     // 동적 경로의 값과 제목이 항상 같다는 전제로 진행
     const PostList = [
@@ -16,10 +16,10 @@ export default function ({ params }: { params: { title: string }}) {
                 <div className={"col-start-2 col-end-6"}>
                     <div className={"h-[90px] p-2 border-b-2 border-gray-200 grid content-end justify-center"}>
                         <h2 className={"text-[28px] font-bold"}>{params.title.length > 20 ? (
-                                <p>{params.title.substring(0, 20)}...</p>
-                            ):(
-                                <p>{params.title}</p>
-                            )}</h2>
+                            <p>{params.title.substring(0, 20)}...</p>
+                        ):(
+                            <p>{params.title}</p>
+                        )}</h2>
                     </div>
                     <div className={"h-[40px] my-[5px] flex items-center"}>
                         <p className={"border-b-2 border-gray-200"}>
