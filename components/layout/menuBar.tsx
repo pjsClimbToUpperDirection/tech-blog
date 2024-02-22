@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react";
+import React, {useEffect} from "react";
 import MenuBarButton from "./Button/menuBarButton"
 
 export default function menuBar({
@@ -12,6 +12,13 @@ export default function menuBar({
         { id: 1, title: "sign_out", href: "/" },
         { id: 2, title: "post_new", href: user + "/post" }
     ]
+
+    useEffect(() => {
+        window.addEventListener("popstate", () => {
+            const menuBar = document.getElementById("menuBar");
+            menuBar.style.zIndex = "0"
+        })
+    }, []);
 
     return (
         <div id={"menuBar"} className={"absolute top-[70px] w-full h-[2100px] flex flex-col flex-auto z-0 bg-black"}>

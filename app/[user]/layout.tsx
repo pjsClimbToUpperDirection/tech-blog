@@ -16,12 +16,15 @@ export default function UserLayout({
     children: React.ReactNode,
     params: { user: string }
 }) {
+    let latch = 0;
+    let previousY = 0;
+
     return (
         <div className={"w-full h-[2240px]"}>
             <LayoutHeader user={params.user}/>
             <MenuBar user={params.user}/>
             {children}
-            <LayoutFooter/>
+            <LayoutFooter latch={latch} previousY={previousY}/>
         </div>
     )
 }

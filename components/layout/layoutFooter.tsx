@@ -3,7 +3,8 @@
 import React, {useEffect} from "react";
 import Link from "next/link";
 
-export default function layoutFooter() {
+// 두 인자를 통해 들어오는 변수는 typing 함수의 중복 실행을 방지하고자 숫자를 통해 상태를 저장한다, 컴포넌트에 독립적인 상태를 유지하고자 상위 컴포넌트에서 선언 후 인자로 값을 받음
+export default function layoutFooter({ latch, previousY } : { latch: number, previousY: number }) {
 
     // 컴포넌트가 DOM 에 추가되었을 때 setup 함수(첫번째 인자) 작동
     useEffect(() => {
@@ -16,9 +17,6 @@ export default function layoutFooter() {
         let index1 = 0;
         let index2 = 0;
 
-        let previousY = 0;
-
-        let latch = 0;
         function variableInnerText(width: number) {
             if (width < 768) {
                 text1 = "";
@@ -28,10 +26,14 @@ export default function layoutFooter() {
                 text2 = "마저 탐색하기..."
             }
         }
-
         function typing(scY: number) {
-            if (scY > previousY + 10) {
-                if (latch > 1) {
+            if (scY > previousY + 4) {
+                if (latch == 0) {
+                    latch = 1;
+                    return;
+                }
+                requestAnimationFrame(() => {
+                    latch = 0;
                     if (index1 != text1.length) {
                         textArea.textContent += text1[index1]
                         index1++
@@ -44,9 +46,7 @@ export default function layoutFooter() {
                             previousY = scY;
                         }
                     }
-                    latch = 0
-                }
-                latch += 1;
+                })
             }
         }
 
@@ -66,6 +66,9 @@ export default function layoutFooter() {
                 window.document.getElementById("footerRoot").style.opacity = "1";
             } else {
                 window.document.getElementById("footerRoot").style.opacity = "0.5";
+            }
+            if (scrollY < 5) {
+                previousY = 0;
             }
             typing(scrollY)
         })
