@@ -2,11 +2,14 @@
 
 import React, {useEffect, useState} from "react";
 import Link from "next/link";
+import {number} from "prop-types";
 
 // 두 인자를 통해 들어오는 변수는 typing 함수의 중복 실행을 방지하고자 숫자를 통해 상태를 저장한다, 컴포넌트에 독립적인 상태를 유지하고자 상위 컴포넌트에서 선언 후 인자로 값을 받음
-export default function layoutFooter({ latch, previousY } : { latch: number, previousY: number }) {
-    const [url, setUrl] = useState("");
+export default function layoutFooter({ latch, previousY, pageNumber } : { latch: number, previousY: number, pageNumber: number }) {
+    // 함수 하단 Link 컴포넌트는 state 가 변경됨에 따라 리 랜더링
+    const [PlusOneUrl, setPlusOneUrl] = useState("");
     const [minusOneUrl, setMinusOneUrl] = useState("");
+
 
     let text1: string;
     let text2: string;
@@ -22,15 +25,16 @@ export default function layoutFooter({ latch, previousY } : { latch: number, pre
     //    variableInnerText(window.innerWidth)
     //}
 
-    function dd() {
-        console.log("dd")
-    }
     // 컴포넌트가 DOM 에 추가되었을 때 setup 함수(첫번째 인자) 작동
     useEffect(() => {
+        // pageNumber 자체는 number 타입으로 지정하였으나, js 내부에서 문자열로 취급되는 문제로 인하여 이같이 처리
+        let currentPage = pageNumber.toString();
+        setPlusOneUrl(`http://localhost:3000/park/main/${parseInt(currentPage) + 1}`);
+        setMinusOneUrl(`http://localhost:3000/park/main/${parseInt(currentPage) - 1}`);
+
         const textArea = document.getElementById("text");
         const link1Area = document.getElementById("link1") as HTMLAnchorElement;
         const link2Area = document.getElementById("link2") as HTMLAnchorElement;
-        const pageNumberContainer : HTMLInputElement | null = document.getElementById("chapter") as HTMLInputElement; // [page]/page.tsx
 
         function typing(scY: number) {
             if (scY > previousY + 7) {
@@ -61,31 +65,16 @@ export default function layoutFooter({ latch, previousY } : { latch: number, pre
         }
 
         function variableInnerText(width: number) {
-            if (pageNumberContainer != null) {
-                text2 = "다음 페이지로..."
+            text2 = "다음 페이지로..."
+            if (pageNumber > 1) {
                 text3 = "아니면 이전 페이지?"
-                setUrl(`http://localhost:3000/park/${parseInt(pageNumberContainer.value) + 1}`)
-                if (parseInt(pageNumberContainer.value) > 1) {
-                    setMinusOneUrl(`http://localhost:3000/park/${parseInt(pageNumberContainer.value) - 1}`)
-                } else {
-                    text3 = "";
-                    setMinusOneUrl("")
-                }
+            } else {
+                text3 = ""
             }
             if (width < 768) {
                 text1 = "";
-                if (pageNumberContainer == null || !pageNumberContainer.value) {
-                    text3 = "";
-                    text2 = "마저 탐색하기..."
-                    setUrl("https://nextjs.org/")
-                }
             } else {
                 text1 = "본 게시글은 개발자 본인이 배운 내용을 기록하여 본인의 역량 발전에 기여하고자 작성하는 글입니다.";
-                if (pageNumberContainer == null || !pageNumberContainer.value) {
-                    text3 = "";
-                    text2 = "클릭하여 마저 탐색하기..."
-                    setUrl("https://nextjs.org/")
-                }
             }
         }
 
@@ -114,13 +103,13 @@ export default function layoutFooter({ latch, previousY } : { latch: number, pre
         window.addEventListener("resize", () => {
             variableInnerText(window.innerWidth)
         })
-    }, []);
+    }, [pageNumber]);
     return (
         <div className={"w-full grid justify-items-center bg-black border-black bottom-0 fixed opacity-50 min-h-[50px] md:min-h-[70px] z-30"}
              id={"footerRoot"}>
-            <div className={"text-gray-200 grid content-center grid-rows-1 p-[5px] h-fit"} onClick={dd}>
+            <div id={"Link"} className={"text-gray-200 grid content-center grid-rows-1 p-[5px] h-fit"}>
                 <span id={"text"}></span>
-                <Link id={"link1"} href={url} className={"text-blue-200 h-full"}/>
+                <Link id={"link1"} href={PlusOneUrl} className={"text-blue-200 h-full"}/>
                 <Link id={"link2"} href={minusOneUrl} className={"text-blue-200 h-full"}/>
             </div>
         </div>

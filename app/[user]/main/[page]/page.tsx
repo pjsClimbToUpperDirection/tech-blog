@@ -1,4 +1,4 @@
-import Summary from "../../../components/PostList/summary/summary"
+import Summary from "../../../../components/PostList/summary/summary"
 
 export default function Page({ params }: { params: { user: string, page: number } }) {
 

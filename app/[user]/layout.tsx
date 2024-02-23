@@ -1,7 +1,6 @@
 import React from "react";
 import "../../components/globals.css"
 import LayoutHeader from "../../components/layout/layoutHeader";
-import LayoutFooter from "../../components/layout/layoutFooter";
 import MenuBar from "../../components/layout/menuBar"
 
 export const metadata = {
@@ -16,15 +15,11 @@ export default function UserLayout({
     children: React.ReactNode,
     params: { user: string }
 }) {
-    let latch = 0;
-    let previousY = 0;
-
     return (
         <div className={"w-full h-[2240px]"}>
             <LayoutHeader user={params.user}/>
             <MenuBar user={params.user}/>
             {children}
-            <LayoutFooter latch={latch} previousY={previousY}/>
         </div>
     )
 }
