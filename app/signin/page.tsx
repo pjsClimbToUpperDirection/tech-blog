@@ -12,9 +12,18 @@ export default function signIn() {
                         </div>
                         <div className={"row-span-4"}>
                             <form className={"h-full grid grid-rows-3"}>
-                                <InputElement type={"email"} placeholder={"/user/email%_"} custom={""} value={undefined}/>
-                                <InputElement type={"password"} placeholder={"/login/pw%_"} custom={""} value={undefined}/>
-                                <InputElement type={"submit"} placeholder={""} custom={"w-full border-2 border-white rounded"} value={"sign_in"}/>
+                                <div className={"row-span-1"}>
+                                    <InputElement type={"email"} placeholder={"/user/email%_"} custom={""}
+                                                  value={undefined}/>
+                                </div>
+                                <div className={"row-span-1"}>
+                                    <InputElement type={"password"} placeholder={"/login/pw%_"} custom={""}
+                                                  value={undefined}/>
+                                </div>
+                                <div className={"row-span-1"}>
+                                    <InputElement type={"submit"} placeholder={""}
+                                                  custom={"w-full border-2 border-white rounded"} value={"sign_in"}/>
+                                </div>
                             </form>
                         </div>
                     </div>

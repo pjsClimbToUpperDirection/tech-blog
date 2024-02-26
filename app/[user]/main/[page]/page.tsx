@@ -1,4 +1,5 @@
 import Summary from "../../../../components/PostList/summary/summary"
+import Layout from "../../../../components/layout/layout";
 
 export default function Page({ params }: { params: { user: string, page: number } }) {
 
@@ -52,17 +53,14 @@ export default function Page({ params }: { params: { user: string, page: number 
     return (
         <>
             <input id={"chapter"} value={params.page} className={"w-0 h-0"} readOnly={true}/>
-            <div className={"absolute top-[70px] w-full h-fit flex flex-col flex-auto bg-black z-10"}>
-                <div className={"w-full h-fit flex justify-center"}>
-                    <div
-                        className={"max-sm:max-w-[400px] h-fit grid grid-cols-1 grid-rows-11 py-[5px]  sm:w-[400px] lg:w-[500px]"}>
-                        {PostList.map((eachPost) => (
-                            <Summary key={eachPost.id} postInfo={eachPost} maxTitleLength={10} maxContentLength={25}
-                                     user={params.user}/>
-                        ))}
-                    </div>
+            <Layout customForRoot={""}>
+                <div className={"grid grid-rows-11"}>
+                    {PostList.map((eachPost) => (
+                        <Summary key={eachPost.id} postInfo={eachPost} maxTitleLength={10} maxContentLength={25}
+                                 user={params.user}/>
+                    ))}
                 </div>
-            </div>
+            </Layout>
         </>
     )
 }

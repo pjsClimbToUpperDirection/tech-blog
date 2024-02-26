@@ -12,11 +12,21 @@ export default function signUp() {
                         </div>
                         <div className={"row-span-6"}>
                             <form className={"h-full grid grid-rows-5"}>
-                                <InputElement type={"text"} placeholder={"/signup/username%_"} custom={""} value={undefined}/>
-                                <InputElement type={"email"} placeholder={"/signup/user/email%_"} custom={""} value={undefined}/>
-                                <InputElement type={"password"} placeholder={"./signup/pw%_"} custom={""} value={undefined}/>
-                                <InputElement type={"password"} placeholder={"./signup/pw%_"} custom={""} value={undefined}/>
-                                <InputElement type={"submit"} placeholder={""} custom={"w-full border-2 border-white rounded"} value={"sign_up"}/>
+                                <div className={"row-span-1"}>
+                                    <InputElement type={"text"} placeholder={"/signup/username%_"} custom={""} value={undefined}/>
+                                </div>
+                                <div className={"row-span-1"}>
+                                    <InputElement type={"email"} placeholder={"/signup/user/email%_"} custom={""} value={undefined}/>
+                                </div>
+                                <div className={"row-span-1"}>
+                                    <InputElement type={"password"} placeholder={"./signup/pw%_"} custom={""} value={undefined}/>
+                                </div>
+                                <div className={"row-span-1"}>
+                                    <InputElement type={"password"} placeholder={"./signup/pw%_"} custom={""} value={undefined}/>
+                                </div>
+                                <div className={"row-span-1"}>
+                                    <InputElement type={"submit"} placeholder={""} custom={"w-full border-2 border-white rounded"} value={"sign_up"}/>
+                                </div>
                             </form>
                         </div>
                     </div>

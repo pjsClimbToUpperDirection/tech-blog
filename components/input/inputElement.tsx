@@ -9,10 +9,10 @@ export default function inputElement({
       custom: string,
       value: string | undefined
     }) {
-    // grid-row 설정하여 구획을 지정해 주기
+    // div 같은 컨테이너 태그 등으로 감싸는 식으로 크기, 위치를 조정할 것
     return (
         <>
-            <div className={"row-span-1 grid content-center"}>
+            <div className={"w-full h-full grid content-center"}>
                 <input className={"inputElement  bg-black " + custom}
                        placeholder={placeholder} type={type} value={value}/>
             </div>
