@@ -2,7 +2,6 @@
 
 import React, {useEffect, useState} from "react";
 import Link from "next/link";
-import {number} from "prop-types";
 
 // 두 인자를 통해 들어오는 변수는 typing 함수의 중복 실행을 방지하고자 숫자를 통해 상태를 저장한다, 컴포넌트에 독립적인 상태를 유지하고자 상위 컴포넌트에서 선언 후 인자로 값을 받음
 export default function layoutFooter({ latch, previousY, pageNumber } : { latch: number, previousY: number, pageNumber: number }) {

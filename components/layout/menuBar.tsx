@@ -10,8 +10,11 @@ export default function menuBar({
 }) {
     const menu = [
         { id: 1, title: "sign_out", href: "/" },
-        { id: 2, title: "post_new", href: "/" + user + "/writeForm" },
-        { id: 3, title: "user_profile", href: "/" + user }
+        { id: 2, title: "post_new", href: "/" + user + "/creation/post" },
+        { id: 3, title: "user_profile", href: "/" + user },
+        { id: 4, title: "modification-account-password", href: "/" + user + "/modification/account/password"},
+        { id: 4, title: "modification-account-email", href: "/" + user + "/modification/account/email"},
+        { id: 5, title: "modification-post", href: "/" + user + "/modification/post"}
     ]
 
     return (
