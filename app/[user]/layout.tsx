@@ -20,8 +20,8 @@ export default function UserLayout({
         { id: 2, title: "post_new", href: "/" + params.user + "/creation/post" },
         { id: 3, title: "user_profile", href: "/" + params.user },
         { id: 4, title: "modification-account-password", href: "/" + params.user + "/modification/account/password"},
-        { id: 4, title: "modification-account-email", href: "/" + params.user + "/modification/account/email"},
-        { id: 5, title: "modification-post", href: "/" + params.user + "/modification/post"}
+        { id: 5, title: "modification-account-email", href: "/" + params.user + "/modification/account/email"},
+        { id: 6, title: "modification-post", href: "/" + params.user + "/modification/post"}
     ]
     return (
         <div className={"w-full h-[2240px]"}>
