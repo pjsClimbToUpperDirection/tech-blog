@@ -6,7 +6,7 @@ import React from "react";
 export default function ModifyPassword() {
     return (
         <Layout customForRoot={""}>
-            <FormForModification>
+            <FormForModification handleSubmit={undefined}>
                 <div className={"w-full h-[260px] sm:border-2 border-slate-200"}>
                     <div className={"w-full h-full grid content-center"}>
                         <div className={"w-full h-fit"}>
