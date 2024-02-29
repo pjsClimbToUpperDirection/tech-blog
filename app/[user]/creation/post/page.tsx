@@ -1,7 +1,7 @@
 import Layout from "../../../../components/layout/layout";
 import InputElement from "../../../../components/input/inputElement"
 
-export default function writeForm() {
+export default function PostCreation() {
     return (
         <Layout customForRoot={""}>
             <form className={"w-full h-full relative flex flex-col"}>
