@@ -6,10 +6,10 @@ export default function MainPage() {
             <div className={"w-full h-[2000px] grid justify-center bg-black"}>
                 <div className={" m-[10px] grid justify-items-center"}>
                     <div className={"grid grid-rows-12"}>
-                        <div className={"h-full row-span-1 grid justify-center content-center px-[10px]"}>
+                        <div className={"h-full row-start-2 row-span-1 grid justify-center content-center px-[10px]"}>
                             <h2 className={"font-bold text-5xl text-slate-300"}>추월차선을 달리고 있나요?</h2>
                         </div>
-                        <div className={"row-start-2 row-end-6 grid grid-rows-5 px-[30px]"}>
+                        <div className={"row-start-3 row-end-6 grid grid-rows-5 px-[30px]"}>
                             <form className={"row-span-2 grid grid-rows-3"}>
                                 <div className={"row-span-1"}>
                                     <InputElement type={"email"} placeholder={"/user/email%_"} custom={""} value={undefined}/>

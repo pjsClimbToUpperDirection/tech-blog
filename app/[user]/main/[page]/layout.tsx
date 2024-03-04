@@ -1,6 +1,7 @@
 import React from "react";
 import LayoutFooter from "../../../../components/layout/layoutFooter";
 
+
 export default function pageLayout({
     children,
     params
@@ -10,7 +11,6 @@ export default function pageLayout({
 }) {
     let latch = 0;
     let previousY = 0;
-
     return (
         <div className={"w-full h-full"}>
             {children}

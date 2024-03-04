@@ -18,11 +18,6 @@ export default function layoutFooter({ latch, previousY, pageNumber } : { latch:
     let index2 = 0;
     let index3 = 0;
 
-    //function jumped() {
-    //    previousY = 0;
-    //    console.log("dd")
-    //    variableInnerText(window.innerWidth)
-    //}
 
     // 컴포넌트가 DOM 에 추가되었을 때 setup 함수(첫번째 인자) 작동
     useEffect(() => {
@@ -64,7 +59,17 @@ export default function layoutFooter({ latch, previousY, pageNumber } : { latch:
         }
 
         function variableInnerText(width: number) {
-            text2 = "다음 페이지로..."
+            // [page] 경로상의 컴포넌트 랜더링 시 component/PostList/postList.tsx 내에서 해당 요소 가져옴, 의존성에 유의!!
+            const lastChapterContainer = document.getElementById("lastChapterStatus") as HTMLInputElement
+            if (lastChapterContainer != null) {
+                if (lastChapterContainer.value == "0") { // 마지막 페이지가 아닐 시
+                    text2 = "다음 페이지로..."
+                } else {
+                    text2 = ""
+                }
+            } else {
+                text2 = "..."
+            }
             if (pageNumber > 1) {
                 text3 = "아니면 이전 페이지?"
             } else {
@@ -104,13 +109,16 @@ export default function layoutFooter({ latch, previousY, pageNumber } : { latch:
         })
     }, [pageNumber]);
     return (
-        <div className={"w-full grid justify-items-center bg-black border-black bottom-0 fixed opacity-50 min-h-[50px] md:min-h-[70px] z-30"}
-             id={"footerRoot"}>
-            <div id={"Link"} className={"text-gray-200 grid content-center grid-rows-1 p-[5px] h-fit"}>
-                <span id={"text"}></span>
-                <Link id={"link1"} href={PlusOneUrl} className={"text-blue-200 h-full"}/>
-                <Link id={"link2"} href={minusOneUrl} className={"text-blue-200 h-full"}/>
+        <>
+            <div
+                className={"w-full grid justify-items-center bg-black border-black bottom-0 fixed opacity-50 min-h-[50px] md:min-h-[70px] z-30"}
+                id={"footerRoot"}>
+                <div id={"Link"} className={"text-gray-200 grid content-center grid-rows-1 p-[5px] h-fit"}>
+                    <span id={"text"}></span>
+                    <Link id={"link1"} href={PlusOneUrl} className={"text-blue-200 h-full"}/>
+                    <Link id={"link2"} href={minusOneUrl} className={"text-blue-200 h-full"}/>
+                </div>
             </div>
-        </div>
+        </>
     )
 }

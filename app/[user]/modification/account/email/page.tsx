@@ -3,7 +3,6 @@ import EmailAddressModificationForm from "../../../../../components/submit/email
 import React from "react";
 
 export default function ModifyEmailAddress() {
-    let requested = 0
     return (
         <Layout customForRoot={""}>
             <EmailAddressModificationForm/>
