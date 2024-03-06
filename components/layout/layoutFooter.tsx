@@ -83,9 +83,9 @@ export default function layoutFooter({ latch, previousY, pageNumber } : { latch:
         }
 
         variableInnerText(window.innerWidth)
-        window.addEventListener("scroll", () => {
+        function onScroll() {
             // 스크롤 위치
-            const scrollY = window.scrollY || window.document.documentElement.scrollTop;
+            const lastScrollY = window.scrollY || window.document.documentElement.scrollTop;
             // 현재 사용자에게 보이는 브라우저 창(스크롤되어 혹은 기본 상태에서 보이는 전체 내용의 일부)의 높이
             const windowHeight = window.innerHeight || document.documentElement.clientHeight;
             // 문서의 전체적인 높이
@@ -93,17 +93,20 @@ export default function layoutFooter({ latch, previousY, pageNumber } : { latch:
                 document.body.scrollHeight,
                 document.documentElement.scrollHeight
             );
-
-            if (scrollY + windowHeight + 5 >= documentHeight){
-                window.document.getElementById("footerRoot").style.opacity = "1";
-            } else {
-                window.document.getElementById("footerRoot").style.opacity = "0.5";
+            const footerRoot = window.document.getElementById("footerRoot");
+            if (footerRoot != null) { // 컴포넌트 언마운트 시 null 값을 참조하는 걸 방지
+                if (lastScrollY + windowHeight + 5 >= documentHeight){
+                    window.document.getElementById("footerRoot").style.opacity = "1";
+                } else {
+                    window.document.getElementById("footerRoot").style.opacity = "0.5";
+                }
             }
-            if (scrollY < 5) {
+            if (lastScrollY < 5) {
                 previousY = 0;
             }
-            typing(scrollY)
-        })
+            typing(lastScrollY)
+        }
+        window.addEventListener("scroll", onScroll)
         window.addEventListener("resize", () => {
             variableInnerText(window.innerWidth)
         })

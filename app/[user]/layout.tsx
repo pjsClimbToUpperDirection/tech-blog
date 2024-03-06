@@ -15,19 +15,12 @@ export default function UserLayout({
     children: React.ReactNode,
     params: { user: string }
 }) {
-    const menuForBar = [
-        { id: 1, title: "sign_out", href: "/" },
-        { id: 2, title: "list_of_posts", href: "/" + params.user + "/main/1" },
-        { id: 3, title: "post_new", href: "/" + params.user + "/creation/post" },
-        { id: 4, title: "user_profile", href: "/" + params.user },
-        { id: 5, title: "modification-account-password", href: "/" + params.user + "/modification/account/password"},
-        { id: 6, title: "modification-account-email", href: "/" + params.user + "/modification/account/email"},
-    ]
+    const commonId1 = "commonId1"
     return (
         <>
             <div className={"w-full h-[2240px]"}>
-                <LayoutHeader user={params.user}/>
-                <MenuBar menu={menuForBar}/>
+                <LayoutHeader user={params.user} externalId={commonId1}/>
+                <MenuBar rootId={commonId1} user={params.user}/>
                 {children}
             </div>
         </>

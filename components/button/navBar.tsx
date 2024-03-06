@@ -1,12 +1,12 @@
 import React from "react";
 import "../navBar.css"
 
-export default function navBar() {
+export default function navBar({ externalId }:{ externalId: string}) {
     let innerStatus = 0;
     function activate() {
         const lineTwo = document.getElementById("navBar").children[1];
         const lineFour = document.getElementById("navBar").children[3];
-        const menuBar = document.getElementById("menuBar");
+        const menuBar = document.getElementById(externalId); // 의존성 유의 !!
         if (innerStatus == 0) {
             lineTwo.id = "lined"
             lineFour.id = "lined"

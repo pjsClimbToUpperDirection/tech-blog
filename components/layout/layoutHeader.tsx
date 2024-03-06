@@ -7,9 +7,11 @@ import "../headerBar.css"
 import close from "./close";
 
 export default function layoutHeader({
-    user
+    user,
+    externalId
     }: {
-    user: string
+    user: string,
+    externalId: string | undefined
 })  {
     // 컴포넌트가 DOM 에 추가되었을 때 setup 함수(첫번째 인자) 작동
     useEffect(() => {
@@ -51,7 +53,7 @@ export default function layoutHeader({
                         </div>
                         <div
                             className={"w-[80px] p-[5px] grid justify-center content-center"}>
-                            <NavBar/>
+                            <NavBar externalId={externalId}/>
                         </div>
                     </div>
                 </div>
