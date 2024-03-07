@@ -5,6 +5,7 @@ import Full_height_Form from "../../modification/full_height_Form";
 import React from "react";
 import axios from "axios";
 
+// todo 추후 postModificationForm 과 공통된 요소 통합하려 시도
 export default function PostCreationForm() {
     // todo handleSubmit 인자에 적절한 메서드(요청 전송 로직) 추가
     function handlePostModification(event) {

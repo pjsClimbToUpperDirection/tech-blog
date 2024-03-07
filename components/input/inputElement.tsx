@@ -1,4 +1,4 @@
-export default function inputElement({
+export default function InputElement({
     // todo 추후 양식 제출을 위하여 필요한 값이 있을 시 인자 추가
       placeholder,
       type,

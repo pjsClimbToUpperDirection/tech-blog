@@ -12,7 +12,7 @@ export default function menuBarButton({
     }) {
     return (
         <div className={"w-full h-[40px] border-b-2 border-gray-600 grid content-center"}>
-            <Link href={href} className={"text-white pl-[22px]"} onClick={close}>{title}</Link>
+            <Link href={href} className={"text-white pl-[22px]"} onClick={close} prefetch={false}>{title}</Link>
         </div>
     )
 }

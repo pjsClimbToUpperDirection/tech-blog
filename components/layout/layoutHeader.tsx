@@ -46,9 +46,18 @@ export default function layoutHeader({
                 className={"w-full flex justify-center bg-black border-black fixed top-0 h-[70px] content-center text-gray-200 z-30"}>
                 <div id={"headerBar"} className={"p-[5px] w-full max-sm:w-[100%] h-fit py-[5px]  sm:w-[450px] lg:w-[550px]"}>
                     <div className={"w-full h-[70px] flex justify-between"}>
-                        <div className={"w-[100px] p-[5px] flex justify-center"}>
-                            <Link href={`/${user}/1`} className={"text-[30px] font-bold"} onClick={close}>
-                                {user}
+                        <div className={"w-[100px] p-[5px] grid content-center justify-items-center"}>
+                            <Link href={`/${user}`} className={""} onClick={close} prefetch={false}>
+                                <div className={"w-[32px] h-[32px] relative"}>
+                                    <div className={"w-[24px] h-[4px] bg-slate-200"}/>
+                                    <div className={"w-[4px] h-[28px] bg-slate-200 absolute left-0"}/>
+                                    <div className={"w-[4px] h-[32px] bg-slate-200 absolute right-0 bottom-0"}/>
+                                    <div className={"w-[24px] h-[4px] bg-slate-200 absolute right-0 bottom-0"}/>
+                                    <div className={"w-[8px] h-[4px] bg-slate-200 absolute left-[8px] top-[8px]"}/>
+                                    <div className={"w-[4px] h-[16px] bg-slate-200 absolute left-[8px] top-[8px]"}/>
+                                    <div className={"w-[8px] h-[4px] bg-slate-200 absolute right-[8px] bottom-[8px]"}/>
+                                    <div className={"w-[4px] h-[16px] bg-slate-200 absolute right-[8px] bottom-[8px]"}/>
+                                </div>
                             </Link>
                         </div>
                         <div
