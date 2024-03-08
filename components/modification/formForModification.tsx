@@ -22,12 +22,6 @@ export default function FormForModification({
                             </form>}
                     </div>
                 </div>
-                <div className={"w-full h-fit absolute bottom-[40px]"}>
-                    <div className={"w-full h-full grid content-center justify-items-center"}>
-                        <p className={"text-orange-500"}>여기까지 내려오셨다면??</p>
-                        <p className={"text-orange-500"}>위로 올라가세요</p>
-                    </div>
-                </div>
             </div>
         </div>
     )

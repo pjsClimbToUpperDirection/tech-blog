@@ -1,43 +1,32 @@
-import Link from "next/link";
+"use client"
+
 import InputElement from "../../components/input/inputElement";
+import Link from "next/link";
+import React from "react";
+import SignUpForm from "../../components/submit/signin_up/signUpForm";
 
 export default function signUp() {
+    let requestUrl = "http://localhost:1701/api/v1/account-api/register/request"
+    let verificationUrl = "http://localhost:1701/api/v1/account-api/register/verification"
     return (
-        <>
-            <div className={"grid justify-items-center h-screen min-h-[900px]"}>
-                <div className={"w-full sm:w-[540px] bg-black h-[660px] sm:h-[600px] z-20  absolute top-[130px] sm:top-[200px]  grid grid-rows-7 rounded px-[40px]  sm:border-2 border-slate-100"}>
-                    <div className={"row-span-6 grid grid-rows-7"}>
-                        <div className={"row-span-1 grid content-center text-slate-300"}>
-                            <p>기술 블로그에 회원가입</p>
-                        </div>
-                        <div className={"row-span-6"}>
-                            <form className={"h-full grid grid-rows-5"}>
-                                <div className={"row-span-1"}>
-                                    <InputElement type={"text"} placeholder={"/signup/username%_"} custom={""} value={undefined}/>
-                                </div>
-                                <div className={"row-span-1"}>
-                                    <InputElement type={"email"} placeholder={"/signup/user/email%_"} custom={""} value={undefined}/>
-                                </div>
-                                <div className={"row-span-1"}>
-                                    <InputElement type={"password"} placeholder={"./signup/pw%_"} custom={""} value={undefined}/>
-                                </div>
-                                <div className={"row-span-1"}>
-                                    <InputElement type={"password"} placeholder={"./signup/pw%_"} custom={""} value={undefined}/>
-                                </div>
-                                <div className={"row-span-1"}>
-                                    <InputElement type={"submit"} placeholder={""} custom={"w-full border-2 border-white rounded"} value={"sign_up"}/>
-                                </div>
-                            </form>
-                        </div>
+        <div className={"grid justify-items-center h-screen min-h-[900px]"}>
+            <div
+                className={"w-full sm:w-[540px] bg-black h-[660px] sm:h-[600px] z-20  absolute top-[130px] sm:top-[200px]  grid grid-rows-7 rounded px-[40px]  sm:border-2 border-slate-100"}>
+                <div className={"row-span-6 grid grid-rows-7"}>
+                    <div className={"row-span-1 grid content-center text-slate-300"}>
+                        <p>기술 블로그에 회원가입</p>
                     </div>
-                    <div className={"row-span-1 grid content-center"}>
-                        <p className={"text-slate-300"}>
-                            이미 소유한 계정이 존재할 시 <Link href={"/signin"} className={"text-orange-500"}>로그인</Link>
-                        </p>
+                    <div className={"row-span-6"}>
+                        <SignUpForm requestUrl={requestUrl} verificationUrl={verificationUrl} method={"POST"}/>
                     </div>
                 </div>
+                <div className={"row-span-1 grid content-center"}>
+                    <p className={"text-slate-300"}>
+                        이미 소유한 계정이 존재할 시 <Link href={"/signin"} className={"text-orange-500"}>로그인</Link>
+                    </p>
+                </div>
             </div>
-        </>
+        </div>
     )
 }
 /*
