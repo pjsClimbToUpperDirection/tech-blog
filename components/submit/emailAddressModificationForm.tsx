@@ -4,9 +4,13 @@ import InputElement from "../input/inputElement";
 import InputElementWithVar from "../input/inputElementWithVar"
 import FormForModification from "../modification/formForModification";
 import React, {useEffect, useState} from "react";
+import {FieldErrors, SubmitErrorHandler, SubmitHandler, useForm} from "react-hook-form";
 
+interface emailAddressModificationForm {
+    emailAddress: string | undefined,
+    authNumber: string | undefined
+}
 
-let EmailAddress: string = undefined; // 인증번호 요청에 따른 리 랜더링 으로 인한 이메일 주소 손실을 방지하고자 함수 외부에 선언
 export default function emailAddressModificationForm({
     initUrl,
     mainUrl
@@ -14,36 +18,51 @@ export default function emailAddressModificationForm({
     initUrl: string,
     mainUrl: string
     }) {
-    let AuthNumber: string;
+    let EmailInputForm: HTMLInputElement;
 
-    let Email: HTMLInputElement;
-    let Auth: HTMLInputElement;
+    const {
+        register,
+        handleSubmit,
+        watch
+    } = useForm<emailAddressModificationForm>();
+
     const [requested, setRequested] = useState(0);
+
+
     // axios 사용하여 인증번호 요청, 주소 변경 요청 구현해 보기
     // 주소 변경 요청 시 InputValue(주소), 인증번호 담아서 요청하기
-    async function handleRequest(event) {
-        event.preventDefault(); // 기본 제출 동작 중단
+    const onSubmit: SubmitHandler<emailAddressModificationForm> = async (data: emailAddressModificationForm) => {
         if (requested == 0) {
+            EmailInputForm = document.getElementById("emailAddress") as HTMLInputElement
+            EmailInputForm.value = ""
             setRequested(1);
-            Email.value = ""
-            console.log(EmailAddress);
-            await sendInitRequest(initUrl)
+            console.log(data);
+            //await sendInitRequest(initUrl)
         } else {
-            console.log(EmailAddress + ", " + AuthNumber);
-            await sendMainRequest(mainUrl, AuthNumber)
+            console.log(data);
+            //await sendMainRequest(mainUrl, AuthNumber)
             // todo 리다이렉션 등과 같은 요청 후 처리 로직 작성할 것
-
-            EmailAddress = undefined // 초기화
-            AuthNumber = undefined
         }
     }
 
-    function setAddressFn() {
-        EmailAddress = Email.value
+    const onError: SubmitErrorHandler<emailAddressModificationForm> = (error: FieldErrors<emailAddressModificationForm>) => {
+        // 유효성 검증 과정에서 문제가 식별되었을 시 작동
+        setCustomOfEmail("")
+        setCustomOfAuthNumber("")
+        switch (true) {
+            case error.emailAddress != undefined: {
+                setCustomOfEmail(error.emailAddress.message)
+                break
+            }
+            case error.authNumber != undefined: {
+                setCustomOfAuthNumber(error.authNumber.message)
+                break
+            }
+        }
     }
-    function setAuthNumFn() {
-        AuthNumber = Auth.value
-    }
+
+    const [ customOfEmail, setCustomOfEmail ] = useState("");
+    const [ customOfAuthNumber, setCustomOfAuthNumber ] = useState("");
 
     async function sendInitRequest(SubstitutedUrl: string) {
         let response= await fetch(SubstitutedUrl, {
@@ -56,7 +75,7 @@ export default function emailAddressModificationForm({
                 "Authorization_Modification_Email": "" // 이메일 인증 번호를 보낼때 본인임을 인증하는 토큰
             },
             body: JSON.stringify({
-                "email": EmailAddress
+                "email": ""
             }),
         })
         console.log(response)
@@ -95,36 +114,74 @@ export default function emailAddressModificationForm({
         }
     }
 
-    useEffect(() => {
-        Email = document.getElementById("emailAddress") as HTMLInputElement
-        Auth = document.getElementById("authNumber") as HTMLInputElement // 초기 랜더링 시 마운트되지 않는다.
-    }, [requested]); // 의존 값 설정으로 해결
     return (
-        <FormForModification handleSubmit={handleRequest}>
-            <div className={"w-full h-[230px] sm:border-2 border-slate-200 grid content-center"}>
-                {requested == 0 ?
-                    <>
-                        <div className={"w-full h-fit"}>
-                            <InputElementWithVar placeholder={"변경하고자 하는 이메일 주소"} custom={"m-3 mx-5"} type={"text"}
-                                          value={undefined} id={"emailAddress"} stateVar={setAddressFn}/>
-                        </div>
-                        <div className={"w-full h-fit"}>
-                            <InputElement type={"submit"} placeholder={""}
-                                          custom={"border-2 border-white rounded m-4"} value={"인증번호 요청"}/>
-                        </div>
-                    </>
-                    :
-                    <>
-                        <div className={"w-full h-fit"}>
-                            <InputElementWithVar placeholder={"인증 번호 입력"} custom={"m-3 mx-5"} type={"text"}
-                                                 value={undefined} id={"authNumber"} stateVar={setAuthNumFn}/>
-                        </div>
-                        <div className={"w-full h-fit"}>
-                            <InputElement type={"submit"} placeholder={""}
-                                          custom={"border-2 border-white rounded m-4"} value={"주소 변경 요청"}/>
-                        </div>
-                    </>
-                }
+        <FormForModification handleSubmit={handleSubmit(onSubmit, onError)}>
+            <div className={"w-full h-[230px] sm:border-2 border-slate-200 grid content-center grid-rows-5"}>
+                <div className={"w-full h-full px-[30px] row-start-2 row-span-3 grid grid-rows-2"}>
+                    {requested == 0 ?
+                        <>
+                            <div className={"w-full h-full row-span-1"}>
+                                <InputElementWithVar
+                                    placeholder={"변경하고자 하는 이메일 주소"}
+                                    type={"text"}
+                                    value={undefined}
+                                    id={"emailAddress"}
+                                    message={customOfEmail}
+                                    options={{
+                                        required: "인증 번호를 수신하기 위하여 주소 입력",
+                                        minLength: {
+                                            value: 10,
+                                            message: "10자 이상 입력"
+                                        },
+                                        maxLength: {
+                                            value: 30,
+                                            message: "30자 이상 입력"
+                                        },
+                                        pattern: {
+                                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                            message: "통상적인 이메일 표현식에 맞추어 입력"
+                                        } }}
+                                    register={register}
+                                    alias={"emailAddress"}/>
+                            </div>
+                            <div className={"w-full h-full row-span-1"}>
+                                <InputElement
+                                    type={"submit"}
+                                    placeholder={""}
+                                    custom={"border-2 border-white rounded"}
+                                    value={"인증번호 요청"}/>
+                            </div>
+                        </>
+                        :
+                        <>
+                            <div className={"w-full h-full row-span-1"}>
+                                <InputElementWithVar
+                                    placeholder={"인증 번호 입력"}
+                                    type={"text"}
+
+                                    value={undefined}
+                                    id={"authNumber"}
+                                    message={customOfAuthNumber}
+                                    options={{
+                                        required: "인증 번호 입력이 요구됨",
+                                        pattern: {
+                                            value: /[0-9]{6}/,
+                                            message: "6자리 숫자 입력"
+                                        }
+                                    }}
+                                    register={register}
+                                    alias={"authNumber"}/>
+                            </div>
+                            <div className={"w-full h-full row-span-1"}>
+                                <InputElement
+                                    type={"submit"}
+                                    placeholder={""}
+                                    custom={"border-2 border-white rounded"}
+                                    value={"주소 변경 요청"}/>
+                            </div>
+                        </>
+                    }
+                </div>
             </div>
         </FormForModification>
     )
