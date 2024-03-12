@@ -1,6 +1,3 @@
-"use client"
-
-import InputElement from "../../components/input/inputElement";
 import Link from "next/link";
 import React from "react";
 import SignUpForm from "../../components/submit/signin_up/signUpForm";

@@ -8,7 +8,7 @@ export default function ModifyEmailAddress() {
     let urlForMainRequest = "http://localhost:1701/api/v1/account-api/modification/email/verification"
     return (
         <Layout customForRoot={""}>
-            <EmailAddressModificationForm initUrl={urlForAuthNumber} mainUrl={urlForMainRequest}/>
+            <EmailAddressModificationForm requestUrl={urlForAuthNumber} verificationUrl={urlForMainRequest} method={"POST"}/>
         </Layout>
     )
 }

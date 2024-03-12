@@ -1,3 +1,5 @@
+"use client"
+
 import InputElementWithVar from "../../input/inputElementWithVar";
 import InputElement from "../../input/inputElement";
 import React, {useState} from "react";
@@ -22,11 +24,10 @@ export default function SignUpForm({
     method: "POST" | "GET" | "PATCH" | "DELETE",
 }) {
     let password: string;
-
     let usernameInputForm: HTMLInputElement;
+    let count: number = 0;
 
     const [requested, setRequested] = useState(0);
-    const [againRequested, setAgainRequested] = useState(0);
 
     const {
         register,
@@ -35,13 +36,16 @@ export default function SignUpForm({
     } = useForm<SignUpFormInput>();
 
     const onSubmit: SubmitHandler<SignUpFormInput> = async (data: SignUpFormInput) => {
+        let transformed1: string;
+        let transformed2: string;
         // 유효성 검증을 통과하였을 시 작동
         if (requested == 0) {
             usernameInputForm = document.getElementById("id_signUpForm") as HTMLInputElement;
             usernameInputForm.value = ""
+            console.log(data)
             setRequested(1)
             // 가입 정보 임시 저장, 인증번호 요청
-            /*let response= await fetch(requestUrl, {
+            /*let response = await fetch(requestUrl, {
                 method: method,
                 headers: {
                     "Content-Type": "application/json",
@@ -62,32 +66,41 @@ export default function SignUpForm({
             } else {
                 alert("other") // todo 500번대 서버 에러일 가능성 농후, 적절히 대처
             } */
-        } else {
-            // todo 인증번호 전송 로직 작성
-            let transformed1 = data.authNumber.slice(0,3); // todo 인증번호가 작성되지 않은 상태에서 회원가입 요청 시도 시 Cannot read properties of undefined (reading 'slice') 발생, 유효성 검증 로직을 작성하여 해결하기
-            let transformed2 = data.authNumber.slice(3,6);
-            console.log(transformed1 + "__" + transformed2)
-            /*let response= await fetch(verificationUrl, {
-                method: method,
-                headers: {
-                    "Content-Type": "application/json",
-                    // todo 브라우저에 저장된 토큰을 불러올 수 있도록 하기
-                    "Authorization": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYXJrMiIsImlhdCI6MTcwOTg3MDYzNywiZXhwIjoxNzA5ODcxNjM3fQ.dUdAS-X4eItW7pxuzAu8HWL518c2uJLNQfVlKOdKy3o",
-                    "refresh": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDk4NzA2MzcsImV4cCI6MTcwOTg4MDYzN30.7JoPuT7LxpJAouXhgyBjzZPiShpADGXSAGggopMqiCo",
-                },
-                body: JSON.stringify({ // 인증번호
-                    "num1": transformed1,
-                    "num2": transformed2
-                }),
-            })
-            console.log(response)
-            if (response.ok) {
-                alert("ok")
-            } else if (response.status == 401) {
-                alert("nope")
+        } else { // 인증번호 전송
+            if (count < 2) {
+                count += 1;
+                // todo 인증번호 전송 로직 작성
+                transformed1 = data.authNumber.slice(0,3);
+                transformed2 = data.authNumber.slice(3,6);
+                setCustomOfAuthNumber("")
+                console.log(transformed1 + "__" + transformed2)
+                /*let response = await fetch(verificationUrl, {
+                    method: method,
+                    headers: {
+                        "Content-Type": "application/json",
+                        // todo 브라우저에 저장된 토큰을 불러올 수 있도록 하기
+                        "Authorization": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYXJrMiIsImlhdCI6MTcwOTg3MDYzNywiZXhwIjoxNzA5ODcxNjM3fQ.dUdAS-X4eItW7pxuzAu8HWL518c2uJLNQfVlKOdKy3o",
+                        "refresh": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDk4NzA2MzcsImV4cCI6MTcwOTg4MDYzN30.7JoPuT7LxpJAouXhgyBjzZPiShpADGXSAGggopMqiCo",
+                    },
+                    body: JSON.stringify({ // 인증번호
+                        "num1": transformed1,
+                        "num2": transformed2
+                    }),
+                })
+                console.log(response)
+                // Todo 응답에 따라 적절히 리다이렉션(401 응답 반환 시 버튼의 테두리 컬러를 빨간색으로 변경)
+                if (response.ok) {
+                    alert("ok")
+                } else if (response.status == 401) {
+                    setRequested(2)
+                    alert("nope")
+                } else {
+                    alert("other")
+                }*/
             } else {
-                alert("other")
-            }*/
+                // todo 2번 이상 인증번호를 통한 인증에 실패하였을 시 처리 영역
+                setRequested(2)// todo 본 setter 는 401 응답 반환 영역에 작성할 것(인증번호가 일치하지 않을 시)
+            }
         }
     }
 
@@ -128,34 +141,6 @@ export default function SignUpForm({
 
     password = watch("password")
 
-    function tryAgain() {
-        if (againRequested == 0) {
-            setAgainRequested(1)
-            // 가입 정보 임시 저장, 인증번호 요청 todo 중복 코드로 판단될 시 별도 함수로 분리하여 handleSignUp 메서드와 공유
-            /*let response= await fetch(requestUrl, {
-                method: method,
-                headers: {
-                    "Content-Type": "application/json",
-                    // todo 브라우저에 저장된 토큰을 불러올 수 있도록 하기
-                    "Authorization": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYXJrMiIsImlhdCI6MTcwOTg3MDYzNywiZXhwIjoxNzA5ODcxNjM3fQ.dUdAS-X4eItW7pxuzAu8HWL518c2uJLNQfVlKOdKy3o",
-                    "refresh": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDk4NzA2MzcsImV4cCI6MTcwOTg4MDYzN30.7JoPuT7LxpJAouXhgyBjzZPiShpADGXSAGggopMqiCo"
-                },
-                body: JSON.stringify({
-                    "Username": username,
-                    "Password": password
-                }),
-            })
-            console.log(response)
-            if (response.status == 200) {
-                response.json().then((data) => console.log(data)) // todo json 타입으로 정상 변환됨, 브라우저 내부에 임시 토큰 저장하는 로직 구현할 것
-            } else if (response.status == 401) {
-                alert("nope") // todo 비밀번호가 유효하지 않다는 걸 사용자에게 알리기
-            } else {
-                alert("other") // todo 500번대 서버 에러일 가능성 농후, 적절히 대처
-            } */
-        }
-    }
-
     return (
         <form className={"h-full grid grid-rows-5"} onSubmit={handleSubmit(onSubmit, onError)} id={"signUpForm"}>
             {requested == 0 ?
@@ -171,7 +156,7 @@ export default function SignUpForm({
                                                  required: "사용자 이름은 필수 요소입니다.",
                                                  minLength: {
                                                      value: 5,
-                                                     message: "5자 이하로 입력"
+                                                     message: "5자 이상 입력"
                                                  },
                                                  maxLength: {
                                                      value: 20,
@@ -260,12 +245,28 @@ export default function SignUpForm({
                                              message={customOfAuthNumber}/>
                     </div>
                     <div className={"row-span-1"}>
-                        <InputElement type={"submit"} placeholder={""}
-                                      custom={"border-2 border-white rounded"} value={"눌러서 회원가입 요청"}/>
+                        {requested == 1 ?
+                            <InputElement type={"submit"}
+                                          placeholder={""}
+                                          custom={"border-2 border-white rounded"}
+                                          value={"눌러서 회원가입 요청"}/>
+                            :
+                            <InputElement type={"submit"}
+                                          placeholder={""}
+                                          custom={"border-2 border-red-500 rounded"}
+                                          value={"인증번호 불일치, 재시도"}/>
+                        }
                     </div>
                     <div className={"row-span-2 text-gray-200"}>
-                        <p>6자리의 인증번호는 회원가입 양식 작성 시 입력된 주소로 전송되며 유효기간 만료 시 양식을 다시 작성해야 함에 유념하시기 바랍니다.</p>
-                        <p className={"text-orange-500"} onClick={tryAgain}>클릭하여 인증번호를 다시 전송..</p>
+                        {requested == 1 ?
+                            <p>
+                                6자리의 인증번호는 회원가입 양식 작성 시 입력된 주소로 전송되며 유효기간 만료 혹은 잘못된 주소를 작성하였을 시 양식을 다시 작성해야 함에 유념하시기 바랍니다.
+                            </p>
+                            :
+                            <p>
+                                인증번호를 통한 계정 생성 요청이 일정 횟수 이상 시도했음에도 받아들여지지 않을 시 메인 페이지로 이동합니다, 이 경우 2분에서 3분 후 다시 시도하십시요.
+                            </p>
+                        }
                     </div>
                 </>
             }
