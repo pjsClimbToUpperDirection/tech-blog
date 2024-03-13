@@ -1,8 +1,8 @@
+/* 초기 랜더링 시 로그인 폼을 부드럽게 출력/charging.tsx */
 .appear {
     animation-duration: 0.2s;
     animation-name: appearance;
 }
-
 @keyframes appearance {
     from {
         opacity: 0;
@@ -12,21 +12,78 @@
     }
 }
 
+/* 초기 랜더링 시 입력 영역에 일시적으로 테두리 표시(안내)/charging.tsx */
 .guidance {
     animation-duration: 2s;
     animation-name: guide;
 }
-
 @keyframes guide {
     from {
         background-color: transparent;
     }
-    30% {
+    25% {
         background-color: rgb(99 102 241);
     }
-
+    80% {
+        background-color: rgb(99 102 241);
+    }
     to {
         background-color: transparent;
     }
+}
 
+/* 로그인 폼 검증 과정에서 에러 메세지 발생할 시 부드럽게 출력/inputElement.tsx */
+.displayErrMsg {
+    animation-duration: 0.4s;
+    animation-name: displayErrMsg;
+    opacity: 100%;
+}
+@keyframes displayErrMsg {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 100%;
+    }
+}
+
+.reaction {
+    animation-duration: 0.5s;
+    animation-name: reaction;
+}
+
+@keyframes reaction {
+    from {
+        padding-left: 120px;
+    }
+    23% {
+        padding-left: 155px;
+    }
+    44% {
+        padding-left: 95px;
+    }
+    62% {
+        padding-left: 140px;
+    }
+    77% {
+        padding-left: 105px;
+    }
+    88% {
+        padding-left: 130px;
+    }
+    93% {
+        padding-left: 114px;
+    }
+    96% {
+        padding-left: 125px;
+    }
+    98% {
+        padding-left: 117px;
+    }
+    99% {
+        padding-left: 121px;
+    }
+    to {
+        padding-left: 120px;
+    }
 }

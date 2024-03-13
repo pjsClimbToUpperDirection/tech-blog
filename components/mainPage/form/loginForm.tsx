@@ -4,7 +4,7 @@ import Link from "next/link";
 import InputElement from "./input/inputElement";
 import {FieldErrors, SubmitErrorHandler, SubmitHandler, useForm} from "react-hook-form";
 import {useState} from "react";
-import MultiPurposeBtn from "./button/multiPurposeBtn";
+import SubmitBtn from "./button/submitBtn";
 
 
 interface SignInForm {
@@ -19,6 +19,8 @@ export default function LoginForm({
     sharedId1: string,
     sharedId2: string
 }) {
+    const submitBtnId = "submitBtn";
+
     const {
         register,
         handleSubmit
@@ -55,10 +57,12 @@ export default function LoginForm({
         switch (true) {
             case error.username != undefined: {
                 setCustomOfUsername(error.username.message)
+                reactiveText()
                 break
             }
             case error.password != undefined: {
                 setCustomOfPassword(error.password.message)
+                reactiveText()
                 break
             }
         }
@@ -66,6 +70,16 @@ export default function LoginForm({
 
     const [ customOfUsername, setCustomOfUsername ] = useState("");
     const [ customOfPassword, setCustomOfPassword ] = useState("");
+
+    function reactiveText(inCase: "invalidForm" | "loginFailed") {
+        if (inCase == "invalidForm") {
+            let textContainer = document.getElementById(submitBtnId);
+            textContainer.classList.remove("reaction")
+            setTimeout(() => {
+                textContainer.classList.add("reaction")
+            }, 50)
+        }
+    }
 
     return (
         <div className={"w-full h-full relative"}>
@@ -94,7 +108,8 @@ export default function LoginForm({
                                             message: '20자 이하로 입력'
                                         }}}
                                     message={customOfUsername}
-                                    elementId={sharedId1} />
+                                    indicatorId={sharedId1}
+                                    errorMsgAreaId={"msgArea1"} />
                             </div>
                             <div className={"w-full h-full row-span-1 p-4"}>
                                 <InputElement
@@ -113,14 +128,15 @@ export default function LoginForm({
                                             message: "30자 이하로 입력"
                                         }}}
                                     message={customOfPassword}
-                                    elementId={sharedId2} />
+                                    indicatorId={sharedId2}
+                                    errorMsgAreaId={"msgArea2"}/>
                             </div>
                         </div>
                         <div className={"w-full h-full row-span-1 p-4"}>
                             <div className={"w-full h-full"}>
-                                <MultiPurposeBtn
-                                    content={"Sign In"}
-                                    type={"submit"} />
+                                <SubmitBtn
+                                    content={"Sign Up"}
+                                    innerContentId={submitBtnId} />
                             </div>
                         </div>
                     </form>
