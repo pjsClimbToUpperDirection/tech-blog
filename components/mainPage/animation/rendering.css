@@ -55,37 +55,37 @@
 
 @keyframes reactionByInvalidForm {
     from {
-        padding-left: 120px;
+        padding-left: 40px;
     }
     23% {
-        padding-left: 155px;
+        padding-left: 75px;
     }
     44% {
-        padding-left: 95px;
+        padding-left: 15px;
     }
     62% {
-        padding-left: 140px;
+        padding-left: 60px;
     }
     77% {
-        padding-left: 105px;
+        padding-left: 25px;
     }
     88% {
-        padding-left: 130px;
+        padding-left: 50px;
     }
     93% {
-        padding-left: 114px;
+        padding-left: 34px;
     }
     96% {
-        padding-left: 125px;
+        padding-left: 45px;
     }
     98% {
-        padding-left: 117px;
+        padding-left: 37px;
     }
     99% {
-        padding-left: 121px;
+        padding-left: 41px;
     }
     to {
-        padding-left: 120px;
+        padding-left: 40px;
     }
 }
 

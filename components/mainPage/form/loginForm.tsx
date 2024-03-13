@@ -84,7 +84,7 @@ export default function LoginForm({
             textContainer.classList.add("previousActionByLoginFailure")
             textContainer.classList.remove("reactionByLoginFailure")
             setTimeout(() => {
-                setCustomOfSubmitBtnText("ID 혹은 암호가 올바르지 않음")
+                setCustomOfSubmitBtnText("Failed")
                 setTimeout(() => {
                     textContainer.classList.add("reactionByLoginFailure")
                 },40)
@@ -105,10 +105,10 @@ export default function LoginForm({
                 <div className={"w-full h-full row-span-1 text-white grid content-center justify-items-center"}>
                     <p>로그인 양식 작성</p>
                 </div>
-                <div className={"w-full h-full row-span-5 p-6"}>
+                <div className={"w-full h-full row-span-5 p-2 sm:p-4 md:p-6"}>
                     <form className={"w-full h-full grid grid-rows-4"} onSubmit={handleSubmit(onSubmit, onError)}>
                         <div className={"w-full h-full row-span-3 grid grid-rows-2"}>
-                            <div className={"w-full h-full row-span-1 p-4"}>
+                            <div className={"w-full h-full row-span-1 p-1 sm:p-2 md:p-4"}>
                                 <InputElement
                                     placeholder={"사용자 이름 (ID)"}
                                     type={"text"}
@@ -128,7 +128,7 @@ export default function LoginForm({
                                     indicatorId={sharedId1}
                                     errorMsgAreaId={"msgArea1"} />
                             </div>
-                            <div className={"w-full h-full row-span-1 p-4"}>
+                            <div className={"w-full h-full row-span-1 p-1 sm:p-2 md:p-4"}>
                                 <InputElement
                                     placeholder={"암호 (Password)"}
                                     type={"password"}
@@ -149,7 +149,7 @@ export default function LoginForm({
                                     errorMsgAreaId={"msgArea2"}/>
                             </div>
                         </div>
-                        <div className={"w-full h-full row-span-1 p-4"}>
+                        <div className={"w-full h-full row-span-1 p-1 py-4 sm:p-2 md:p-4"}>
                             <div className={"w-full h-full"}>
                                 <SubmitBtn
                                     content={customOfSubmitBtnText}
@@ -165,3 +165,8 @@ export default function LoginForm({
         </div>
     )
 }
+
+/*
+* <SubmitBtn
+                                    content={customOfSubmitBtnText}
+                                    innerContentId={submitBtnId} />*/

@@ -10,7 +10,7 @@ export default function MainPage() {
     const sharedOne: string = "one";
     const sharedTwo: string = "two";
     return (
-        <div className={"relative w-full h-full min-h-[750px] sm:min-h-[800px] md:min-h-[920px] lg:min-h-[1050px]"}>
+        <div className={"relative w-full h-full min-h-[900px]  lg:min-h-[1150px]"}>
             <Charging
                 renderedElementId={commonId}
                 idForConnect1={sharedOne}
