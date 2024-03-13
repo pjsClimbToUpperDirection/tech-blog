@@ -28,6 +28,7 @@ export default function LoginForm({
 
     const onSubmit: SubmitHandler<SignInForm> = async (data: SignInForm) => {
         console.log(data)
+        reactiveText("loginFailed") // Todo 본 함수는 요청이 실패하였을 경우 호출하므로 요청 전송 로직 작성 시 적절한 위치로 이동
         /*let response= await fetch(url, {
             method: method,
             headers: {
@@ -57,12 +58,12 @@ export default function LoginForm({
         switch (true) {
             case error.username != undefined: {
                 setCustomOfUsername(error.username.message)
-                reactiveText()
+                reactiveText("invalidForm")
                 break
             }
             case error.password != undefined: {
                 setCustomOfPassword(error.password.message)
-                reactiveText()
+                reactiveText("invalidForm")
                 break
             }
         }
@@ -70,16 +71,32 @@ export default function LoginForm({
 
     const [ customOfUsername, setCustomOfUsername ] = useState("");
     const [ customOfPassword, setCustomOfPassword ] = useState("");
+    const [ customOfSubmitBtnText , setCustomOfSubmitBtnText ] = useState("Sign_Up")
 
     function reactiveText(inCase: "invalidForm" | "loginFailed") {
+        let textContainer = document.getElementById(submitBtnId);
         if (inCase == "invalidForm") {
-            let textContainer = document.getElementById(submitBtnId);
-            textContainer.classList.remove("reaction")
+            textContainer.classList.remove("reactionByInvalidForm")
             setTimeout(() => {
-                textContainer.classList.add("reaction")
+                textContainer.classList.add("reactionByInvalidForm")
             }, 50)
+        } else {
+            textContainer.classList.add("previousActionByLoginFailure")
+            textContainer.classList.remove("reactionByLoginFailure")
+            setTimeout(() => {
+                setCustomOfSubmitBtnText("ID 혹은 암호가 올바르지 않음")
+                setTimeout(() => {
+                    textContainer.classList.add("reactionByLoginFailure")
+                },40)
+            }, 200)
         }
     }
+    /*
+    * setCustomOfSubmitBtnText("ID 혹은 암호가 올바르지 않음")
+            textContainer.classList.remove("reactionByLoginFailure")
+            setTimeout(() => {
+                textContainer.classList.add("reactionByLoginFailure")
+            },100)*/
 
     return (
         <div className={"w-full h-full relative"}>
@@ -135,7 +152,7 @@ export default function LoginForm({
                         <div className={"w-full h-full row-span-1 p-4"}>
                             <div className={"w-full h-full"}>
                                 <SubmitBtn
-                                    content={"Sign Up"}
+                                    content={customOfSubmitBtnText}
                                     innerContentId={submitBtnId} />
                             </div>
                         </div>

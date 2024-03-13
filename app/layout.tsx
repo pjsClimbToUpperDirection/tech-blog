@@ -14,10 +14,10 @@ export default function RootLayout({
 }) {
     // body 태그의 배경색을 slate-900으로 설정함으로서 끝단 스크롤 시 흰색 바탕 노출을 방지
     return (
-        <html lang="en">
-        <body className={"bg-black"}>
-            {children}
-        </body>
+        <html lang="en" className={"w-full"}>
+            <body className={"bg-black"}>
+                {children}
+            </body>
         </html>
     )
 }

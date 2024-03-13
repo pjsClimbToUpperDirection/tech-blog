@@ -47,12 +47,13 @@
     }
 }
 
-.reaction {
+/* 로그인 폼 검증 과정에서 에러 메세지 발생할 시 텍스트 좌우 진동/loginForm.tsx */
+.reactionByInvalidForm {
     animation-duration: 0.5s;
-    animation-name: reaction;
+    animation-name: reactionByInvalidForm;
 }
 
-@keyframes reaction {
+@keyframes reactionByInvalidForm {
     from {
         padding-left: 120px;
     }
@@ -85,5 +86,35 @@
     }
     to {
         padding-left: 120px;
+    }
+}
+
+/* 로그인 실패할 시 기존 텍스트 제거/loginForm.tsx */
+.previousActionByLoginFailure {
+    animation-duration: 0.3s;
+    animation-name: previousActionByLoginFailure;
+    opacity: 0;
+}
+@keyframes previousActionByLoginFailure {
+    from {
+        opacity: 100%;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* 로그인 실패할 시 특정 텍스트 부드럽게 출력/loginForm.tsx */
+.reactionByLoginFailure {
+    animation-duration: 0.4s;
+    animation-name: reactionByLoginFailure;
+    opacity: 100%;
+}
+@keyframes reactionByLoginFailure {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 100%;
     }
 }

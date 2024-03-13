@@ -25,7 +25,6 @@ export default function InputElement({
         if (message.length > 1) {
             MsgArea = document.getElementById(errorMsgAreaId)
             MsgArea.classList.remove("displayErrMsg")
-            MsgArea.classList.add("removeErrMsg")
             setTimeout(() => {
                 MsgArea.classList.add("displayErrMsg")
             },100)
