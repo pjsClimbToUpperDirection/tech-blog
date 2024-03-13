@@ -1,0 +1,32 @@
+.appear {
+    animation-duration: 0.2s;
+    animation-name: appearance;
+}
+
+@keyframes appearance {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 100%;
+    }
+}
+
+.guidance {
+    animation-duration: 2s;
+    animation-name: guide;
+}
+
+@keyframes guide {
+    from {
+        background-color: transparent;
+    }
+    30% {
+        background-color: rgb(99 102 241);
+    }
+
+    to {
+        background-color: transparent;
+    }
+
+}
