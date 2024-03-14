@@ -1,6 +1,11 @@
 import React from "react";
 import "../components/globals.css"
 import "../components/input.css"
+import {Provider} from "react-redux";
+import store from "../tokenStorage/redux/store";
+import TokenContainer from "../tokenStorage/component/tokenContainer";
+import {configureStore} from "@reduxjs/toolkit";
+import TokenReducer from "../tokenStorage/redux/reducer";
 
 export const metadata = {
     title: 'is building..',
@@ -12,12 +17,22 @@ export default function RootLayout({
     }: {
     children: React.ReactNode
 }) {
-    // body 태그의 배경색을 slate-900으로 설정함으로서 끝단 스크롤 시 흰색 바탕 노출을 방지
+    const store = configureStore({ // createStore 대신 사용이 권장됨
+        reducer: TokenReducer
+    });
     return (
         <html lang="en">
             <body className={"bg-black"}>
+            <TokenContainer/>
+            <Provider store={store}>
                 {children}
+            </Provider>
             </body>
         </html>
     )
 }
+
+/*
+* <Provider store={store}>
+                {children}
+            </Provider>*/

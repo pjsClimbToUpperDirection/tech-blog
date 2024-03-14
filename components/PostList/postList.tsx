@@ -2,7 +2,6 @@
 
 import Summary from "./summary/summary";
 import React, {useEffect} from "react";
-import axios from "axios";
 
 export default function PostList({
     page,
@@ -17,7 +16,7 @@ export default function PostList({
     useEffect(() => {
         lastChapterContainer = document.getElementById("lastChapterStatus") as HTMLInputElement
         // 랜더링 될 시 게시글 목록 요청하여 변수에 저장, hook 상태 변경
-        //axios.get()
+        // todo 401 응답 시 로그인 페이지로 리다이렉션
     }, []);
     useEffect(() => {
         IsLastPage()

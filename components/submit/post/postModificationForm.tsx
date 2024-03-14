@@ -3,7 +3,6 @@
 import React, {useEffect} from "react";
 import InputElementForDisplay from "../../input/inputElementForDisplay";
 import Full_height_Form from "../../modification/full_height_Form";
-import axios from "axios";
 
 // todo displayedValue 값은 수정하고자 하는 기존 게시글 제목을 값으로 대입할수 있도록 할 것,
 // todo 제목은 수정할 수 없으며 본문 수정 후 기존 제목과 함께 서버에 수정 요청

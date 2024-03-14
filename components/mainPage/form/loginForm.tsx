@@ -81,6 +81,8 @@ export default function LoginForm({
                 textContainer.classList.add("reactionByInvalidForm")
             }, 50)
         } else {
+            setCustomOfUsername("");
+            setCustomOfPassword("")
             textContainer.classList.add("previousActionByLoginFailure")
             textContainer.classList.remove("reactionByLoginFailure")
             setTimeout(() => {
@@ -91,12 +93,6 @@ export default function LoginForm({
             }, 200)
         }
     }
-    /*
-    * setCustomOfSubmitBtnText("ID 혹은 암호가 올바르지 않음")
-            textContainer.classList.remove("reactionByLoginFailure")
-            setTimeout(() => {
-                textContainer.classList.add("reactionByLoginFailure")
-            },100)*/
 
     return (
         <div className={"w-full h-full relative"}>
@@ -165,8 +161,3 @@ export default function LoginForm({
         </div>
     )
 }
-
-/*
-* <SubmitBtn
-                                    content={customOfSubmitBtnText}
-                                    innerContentId={submitBtnId} />*/

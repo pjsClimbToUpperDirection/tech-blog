@@ -3,14 +3,13 @@ import MainLayout from "../components/mainPage/layout";
 import Charging from "../components/mainPage/animation/charging";
 import LoginForm from "../components/mainPage/form/loginForm";
 import "../components/mainPage/animation/rendering.css"
-import Head from "next/head";
 
 export default function MainPage() {
     const commonId: string = "common";
     const sharedOne: string = "one";
     const sharedTwo: string = "two";
     return (
-        <div className={"relative w-full h-full min-h-[900px]  lg:min-h-[1150px]"}>
+        <div className={"relative w-full h-full min-h-[900px]  lg:min-h-[1300px]"}>
             <Charging
                 renderedElementId={commonId}
                 idForConnect1={sharedOne}
