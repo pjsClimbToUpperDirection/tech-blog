@@ -1,6 +1,6 @@
 import Layout from "../../../../../components/layout/layout";
 
-// todo 서버 사이드 랜더링 과정에서 데이터 가져오기
+// todo 클라이언트 랜더링 사용하여 useEffect 영역에서 데이터 가져오기, 401 반환시 리다이렉션
 export default function PostDetail({ params }:{ params: { title: string} }) {
     const PostList = [
         { id: 1, writer: "me1", email: "who@naver.com", title: "first123456789012345678", content: "somethingOne", created_date: "24-02-07", updated_date: null},

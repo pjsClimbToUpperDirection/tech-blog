@@ -24,9 +24,7 @@ export default function RootLayout({
         <html lang="en">
             <body className={"bg-black"}>
             <TokenContainer/>
-            <Provider store={store}>
-                {children}
-            </Provider>
+            {children}
             </body>
         </html>
     )

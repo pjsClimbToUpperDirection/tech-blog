@@ -4,18 +4,23 @@ import InputElementWithVar from "../../input/inputElementWithVar";
 import InputElement from "../../input/inputElement";
 import {useState} from "react";
 import {FieldErrors, SubmitErrorHandler, SubmitHandler, useForm} from "react-hook-form";
+import store from "../../../tokenStorage/redux/store";
 
 interface SignInFormInput {
     username: string,
     password: string,
 }
+interface issuedTokens {
+    accessToken: string,
+    refreshToken: string
+}
 
 // todo 유효성 검증 구현 완료됨, 이후 필요한 로직 구현(요청, 응답, 리디렉션)
 export default function SignInForm({
-    url,
+    signInUrl,
     method,
     }:{
-    url: string,
+    signInUrl: string,
     method: "POST" | "GET" | "PATCH" | "DELETE",
 }) {
     const {
@@ -26,27 +31,31 @@ export default function SignInForm({
 
     const onSubmit: SubmitHandler<SignInFormInput> = async (data: SignInFormInput) => {
         console.log(data)
-        /*let response= await fetch(url, {
-            method: method,
+        let response= await fetch(signInUrl, {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                // todo 브라우저에 저장된 토큰을 불러올 수 있도록 하기
-                "Authorization": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYXJrMiIsImlhdCI6MTcwOTg3MDYzNywiZXhwIjoxNzA5ODcxNjM3fQ.dUdAS-X4eItW7pxuzAu8HWL518c2uJLNQfVlKOdKy3o",
-                "refresh": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDk4NzA2MzcsImV4cCI6MTcwOTg4MDYzN30.7JoPuT7LxpJAouXhgyBjzZPiShpADGXSAGggopMqiCo"
             },
             body: JSON.stringify({
-                "Username": username,
-                "Password": password
+                "username": data.username,
+                "password": data.password
             }),
         })
         console.log(response)
         if (response.status == 200) {
-            response.json().then((data) => console.log(data)) // todo json 타입으로 정상 변환됨, 브라우저 내부에 임시 토큰 저장하는 로직 구현할 것
+            // todo 리다이렉션 로직 구현
+            response.json().then((data: issuedTokens) => {
+                store.dispatch({
+                    type: "set/accessToken",
+                    payload: data.accessToken
+                })
+                sessionStorage.setItem("RefreshToken", data.refreshToken)
+            })
         } else if (response.status == 401) {
-            alert("nope") // todo 비밀번호가 유효하지 않다는 걸 사용자에게 알리기
+            setCustomOfButtonText("입력 값 확인 후 재시도")
         } else {
-            alert("other") // todo 500번대 서버 에러일 가능성 농후, 적절히 대처
-        } */
+            setCustomOfButtonText("입력 값 확인 후 재시도")
+        }
     }
 
     const onError: SubmitErrorHandler<SignInFormInput> = (error: FieldErrors<SignInFormInput>) => {
@@ -66,6 +75,7 @@ export default function SignInForm({
 
     const [ customOfUsername, setCustomOfUsername ] = useState("");
     const [ customOfPassword, setCustomOfPassword ] = useState("");
+    const [ customOfButtonText, setCustomOfButtonText ] = useState("Sign In")
 
     return (
         <>
@@ -112,7 +122,7 @@ export default function SignInForm({
                 </div>
                 <div className={"row-span-1"}>
                     <InputElement type={"submit"} placeholder={""}
-                                  custom={"w-full border-2 border-white rounded"} value={"sign_in"}/>
+                                  custom={"w-full border-2 border-white rounded"} value={customOfButtonText}/>
                 </div>
             </form>
         </>

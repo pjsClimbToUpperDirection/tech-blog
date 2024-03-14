@@ -5,6 +5,8 @@ import LoginForm from "../components/mainPage/form/loginForm";
 import "../components/mainPage/animation/rendering.css"
 
 export default function MainPage() {
+    const loginUrl: string = "http://localhost:1701/api/v1/auth-api/issue"
+
     const commonId: string = "common";
     const sharedOne: string = "one";
     const sharedTwo: string = "two";
@@ -15,7 +17,7 @@ export default function MainPage() {
                 idForConnect1={sharedOne}
                 idForConnect2={sharedTwo}/>
             <MainLayout layoutId={commonId}>
-                <LoginForm sharedId1={sharedOne} sharedId2={sharedTwo}/>
+                <LoginForm sharedId1={sharedOne} sharedId2={sharedTwo} loginUrl={loginUrl}/>
             </MainLayout>
         </div>
     )

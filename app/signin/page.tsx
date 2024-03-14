@@ -13,7 +13,7 @@ export default function signIn() {
                         <p>기술 블로그에 로그인</p>
                     </div>
                     <div className={"row-span-3"}>
-                        <SignInForm url={url} method={"POST"}/>
+                        <SignInForm signInUrl={url} method={"POST"}/>
                     </div>
                     <div className={"row-span-1 grid content-center"}>
                         <p className={"text-slate-300"}>
