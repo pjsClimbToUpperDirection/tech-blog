@@ -6,7 +6,7 @@ export default function summary({
     maxContentLength,
     user
     }: {
-    postInfo: { id: number, writer: string, email: string, title: string, "content": string, "created_date": string, "updated_date": string | null},
+    postInfo: { post_id: number, writer: string, title: string, "content": string, "created_date": string, "updated_date": string | null},
     maxTitleLength: number,
     maxContentLength: number,
     user: string,
@@ -16,7 +16,7 @@ export default function summary({
             className={"col-span-1 p-[5px] m-[5px] border-[5px] border-gray-600 rounded-3xl h-[180px]"}>
             <Link href={`/${user}/detail/post/${postInfo.title}`} prefetch={false} className={"px-10 grid grid-rows-5"}>
                 <h2 className={"row-span-1 w-fit grid justify-items-start m-[2px] border-b-[2px] border-gray-600 text-gray-200 px-[30px]"}
-                    id={postInfo.id.toString()}>
+                    id={postInfo.post_id.toString()}>
                     {postInfo.title.length > maxTitleLength ? (
                         <p>{postInfo.title.substring(0, maxTitleLength)}...</p>
                     ):(

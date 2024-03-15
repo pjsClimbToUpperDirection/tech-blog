@@ -6,6 +6,7 @@ import {FieldErrors, SubmitErrorHandler, SubmitHandler, useForm} from "react-hoo
 import {useState} from "react";
 import SubmitBtn from "./button/submitBtn";
 import store from "../../../tokenStorage/redux/store";
+import {useRouter} from "next/navigation";
 
 
 interface SignInForm {
@@ -27,11 +28,12 @@ export default function LoginForm({
     loginUrl: string
 }) {
     const submitBtnId = "submitBtn";
-
     const {
         register,
         handleSubmit
     } = useForm<SignInForm>();
+    const router = useRouter();
+
 
     const onSubmit: SubmitHandler<SignInForm> = async (data: SignInForm) => {
         let response= await fetch(loginUrl, {
@@ -46,13 +48,14 @@ export default function LoginForm({
         })
         console.log(response)
         if (response.status == 200) {
-            response.json().then((data: issuedTokens) => {
+            await response.json().then((data: issuedTokens) => {
                 store.dispatch({
                     type: "set/accessToken",
                     payload: data.accessToken
                 })
                 sessionStorage.setItem("RefreshToken", data.refreshToken)
             }) // todo json 타입으로 정상 변환됨, 브라우저 내부에 임시 토큰 저장하는 로직 구현할 것
+            router.push(`/${data.username}/main/1`)
         } else if (response.status == 401) {
             reactiveText("loginFailed")
         } else {
@@ -90,7 +93,7 @@ export default function LoginForm({
             }, 50)
         } else {
             setCustomOfUsername("");
-            setCustomOfPassword("")
+            setCustomOfPassword("");
             textContainer.classList.add("previousActionByLoginFailure")
             textContainer.classList.remove("reactionByLoginFailure")
             setTimeout(() => {
@@ -121,8 +124,8 @@ export default function LoginForm({
                                     options={{
                                         required: "사용자 이름을 입력하여 양식 작성 요청",
                                         minLength: {
-                                            value: 5,
-                                            message: "5자 이상 입력"
+                                            value: 3,
+                                            message: "3자 이상 입력"
                                         },
                                         maxLength: {
                                             value: 20,

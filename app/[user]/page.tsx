@@ -1,7 +1,10 @@
 import Layout from "../../components/layout/layout";
 import Link from "next/link";
 
-export default function Profile({ params } : { params: { user: string }}) {
+export default function Profile({
+    params
+    } : {
+    params: { user: string } }) {
     // todo 해당 페이지 랜더링 시 서버 측에서 api 호출, 레이아웃에 데이터가 반영되도록 구현하기
     const contentArray: { id: number, mainTitle: string, infoTitle: string | undefined, info: string | undefined, content: string | undefined, linkContent: string | undefined, href: string | undefined }[] = [
         {
@@ -50,6 +53,7 @@ export default function Profile({ params } : { params: { user: string }}) {
     )
 }
 
+// todo 사용자 정보 fetch 하는 로직 구현하기
 function MainContent({
     contents
     }:{

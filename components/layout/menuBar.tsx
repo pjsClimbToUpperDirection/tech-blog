@@ -9,9 +9,10 @@ export default function menuBar({
     user: string
 }) {
     const menu: { id:number, title: string, href: string }[] = [
-        { id: 1, title: "게시글 목록", href: "/" + user + "/main/1" },
-        { id: 2, title: "게시글 작성란", href: "/" + user + "/creation/post" },
-        { id: 3, title: "주 페이지", href: "/" + user }
+        { id: 1, title: "로그아웃", href: "/" + user + "/logout" },
+        { id: 2, title: "게시글 목록", href: "/" + user + "/main/1" },
+        { id: 3, title: "게시글 작성란", href: "/" + user + "/creation/post" },
+        { id: 4, title: "주 페이지", href: "/" + user }
     ]
     return (
         <div id={rootId} className={"absolute top-[70px] w-full h-[2100px] flex flex-col flex-auto z-0 bg-black"}>
