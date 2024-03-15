@@ -2,6 +2,8 @@
 
 import React, {useEffect, useState} from "react";
 import Link from "next/link";
+import LastChapterStatusStore from "../../postStorage/chapter/redux/store";
+
 
 // 두 인자를 통해 들어오는 변수는 typing 함수의 중복 실행을 방지하고자 숫자를 통해 상태를 저장한다, 컴포넌트에 독립적인 상태를 유지하고자 상위 컴포넌트에서 선언 후 인자로 값을 받음
 export default function layoutFooter({ latch, previousY, pageNumber } : { latch: number, previousY: number, pageNumber: number }) {
@@ -58,11 +60,10 @@ export default function layoutFooter({ latch, previousY, pageNumber } : { latch:
             }
         }
 
-        function variableInnerText(width: number) {
-            // [page] 경로상의 컴포넌트 랜더링 시 component/PostList/postList.tsx 내에서 해당 요소 가져옴, 의존성에 유의!!
-            const lastChapterContainer = document.getElementById("lastChapterStatus") as HTMLInputElement
-            if (lastChapterContainer != null) {
-                if (lastChapterContainer.value == "0") { // 마지막 페이지가 아닐 시
+        function variableInnerText() {
+            let lastChapterContainer = LastChapterStatusStore.getState().value;
+            if (lastChapterContainer != undefined) {
+                if (lastChapterContainer == 0) { // 마지막 페이지가 아닐 시
                     text2 = "다음 페이지로..."
                 } else {
                     text2 = ""
@@ -75,6 +76,9 @@ export default function layoutFooter({ latch, previousY, pageNumber } : { latch:
             } else {
                 text3 = ""
             }
+        }
+
+        function variableInnerText_Width(width: number) {
             if (width < 768) {
                 text1 = "";
             } else {
@@ -82,7 +86,8 @@ export default function layoutFooter({ latch, previousY, pageNumber } : { latch:
             }
         }
 
-        variableInnerText(window.innerWidth)
+        LastChapterStatusStore.subscribe(variableInnerText) // () => void 타입의 콜백 함수가 요구됨
+        variableInnerText_Width(window.innerWidth)
         function onScroll() {
             // 스크롤 위치
             const lastScrollY = window.scrollY || window.document.documentElement.scrollTop;
@@ -108,7 +113,7 @@ export default function layoutFooter({ latch, previousY, pageNumber } : { latch:
         }
         window.addEventListener("scroll", onScroll)
         window.addEventListener("resize", () => {
-            variableInnerText(window.innerWidth)
+            variableInnerText_Width(window.innerWidth)
         })
     }, [pageNumber]);
     return (

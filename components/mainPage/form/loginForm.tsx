@@ -5,7 +5,7 @@ import InputElement from "./input/inputElement";
 import {FieldErrors, SubmitErrorHandler, SubmitHandler, useForm} from "react-hook-form";
 import {useState} from "react";
 import SubmitBtn from "./button/submitBtn";
-import store from "../../../tokenStorage/redux/store";
+import TokenStore from "../../../tokenStorage/redux/store";
 import {useRouter} from "next/navigation";
 
 
@@ -32,8 +32,8 @@ export default function LoginForm({
         register,
         handleSubmit
     } = useForm<SignInForm>();
-    const router = useRouter();
 
+    const router = useRouter();
 
     const onSubmit: SubmitHandler<SignInForm> = async (data: SignInForm) => {
         let response= await fetch(loginUrl, {
@@ -49,7 +49,7 @@ export default function LoginForm({
         console.log(response)
         if (response.status == 200) {
             await response.json().then((data: issuedTokens) => {
-                store.dispatch({
+                TokenStore.dispatch({
                     type: "set/accessToken",
                     payload: data.accessToken
                 })

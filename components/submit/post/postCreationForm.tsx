@@ -4,8 +4,8 @@ import Full_height_Form from "../../modification/full_height_Form";
 import React, {useState} from "react";
 import InputElementWithVar from "../../input/inputElementWithVar";
 import {FieldErrors, SubmitErrorHandler, SubmitHandler, useForm} from "react-hook-form";
-import store from "../../../tokenStorage/redux/store";
-import { RegisterOptions, UseFormRegister } from "react-hook-form";
+import TokenStore from "../../../tokenStorage/redux/store";
+import MainContentArea from "./content/mainContentArea";
 import {redirect} from "next/navigation";
 
 // todo 추후 postModificationForm 과 공통된 요소 통합하려 시도
@@ -31,7 +31,7 @@ export default function PostCreationForm({
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": store.getState().value,
+                "Authorization": TokenStore.getState().value,
                 "refresh": sessionStorage.getItem("RefreshToken")
             },
             body: JSON.stringify({
@@ -82,7 +82,7 @@ export default function PostCreationForm({
                                                  message={customOfTitle}
                                                  register={register}
                                                  options={{
-                                                     required: "게시글 제목을 입력하여 양식 작성 요청",
+                                                     required: "게시글 제목을 입력하여 양식 구성",
                                                      minLength: {
                                                          value: 3,
                                                          message: "3자 이상 입력"
@@ -108,7 +108,7 @@ export default function PostCreationForm({
                         register={register}
                         alias={"content"}
                         options={{
-                            required: "본문 내용을 입력하여 양식 작성 요청",
+                            required: "본문 내용을 입력하여 양식 구성",
                             minLength: {
                                 value: 50,
                                 message: "50자 이상 입력"
@@ -133,44 +133,5 @@ export default function PostCreationForm({
                 </div>
             </div>
         </Full_height_Form>
-    )
-}
-
-function MainContentArea({
-    placeholder,
-    value,
-    id,
-    register,
-    alias,
-    options,
-    message
-    }:{
-    placeholder: string,
-    value: string | undefined,
-    id: string,
-    register: UseFormRegister<any>,
-    alias: string
-    options: RegisterOptions,
-    message: string
-}) {
-    // register 메서드로 요소를 등록(register)
-    // div 같은 컨테이너 태그 등으로 감싸는 식으로 크기, 위치를 조정할 것
-    let custom: string;
-    if (message.length > 1) {
-        custom = "border-2 border-red-700"
-    } else {
-        custom = ""
-    }
-    return (
-        <>
-            <div className={"flex flex-col w-full h-full " + custom}>
-                <textarea className={"grow w-full h-full bg-black text-gray-200 outline-0 resize-none"}
-                       placeholder={placeholder}
-                       value={value}
-                       id={id}
-                       {...register(alias, options)}/>
-                <div className={"flex-none w-full h-[30px] text-red-600 px-[3px]"}><p>{message}</p></div>
-            </div>
-        </>
     )
 }

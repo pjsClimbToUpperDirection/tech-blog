@@ -1,7 +1,7 @@
 "use client"
 
 import {useEffect} from "react";
-import store from "../redux/store";
+import TokenStore from "../redux/store";
 
 // SPA 에 맞추어 설계되었으므로 새 탭을 띄우거나 브라우저를 닫은 후 재방문할 시 로그인이 유지되지 않음
 export default function TokenContainer() {
@@ -9,12 +9,12 @@ export default function TokenContainer() {
     useEffect(() => {
         window.addEventListener("beforeunload", (event) => {
             event.returnValue = '';
-            sessionStorage.setItem("AccessToken", store.getState().value); // 새로고침 시 accessToken 을 세션 스토리지에 저장
+            sessionStorage.setItem("AccessToken", TokenStore.getState().value); // 새로고침 시 accessToken 을 세션 스토리지에 저장
         })
         let AccessToken: string = sessionStorage.getItem("AccessToken");
         if (!done) {
             if (AccessToken != null && AccessToken.length > 20) {
-                store.dispatch({
+                TokenStore.dispatch({
                     type: "set/accessToken",
                     payload: AccessToken
                 })

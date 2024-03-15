@@ -4,7 +4,7 @@ import InputElementWithVar from "../../input/inputElementWithVar";
 import InputElement from "../../input/inputElement";
 import {useState} from "react";
 import {FieldErrors, SubmitErrorHandler, SubmitHandler, useForm} from "react-hook-form";
-import store from "../../../tokenStorage/redux/store";
+import TokenStore from "../../../tokenStorage/redux/store";
 
 interface SignInFormInput {
     username: string,
@@ -45,12 +45,13 @@ export default function SignInForm({
         if (response.status == 200) {
             // todo 리다이렉션 로직 구현
             response.json().then((data: issuedTokens) => {
-                store.dispatch({
+                TokenStore.dispatch({
                     type: "set/accessToken",
                     payload: data.accessToken
                 })
                 sessionStorage.setItem("RefreshToken", data.refreshToken)
             })
+            history.back(); // 본 로그인 폼은 루트 경로가 아닌 다른 경로로 접근을 시도할 시 출력되므로 로그인 성공 시 이전 페이지로 돌아감
         } else if (response.status == 401) {
             setCustomOfButtonText("입력 값 확인 후 재시도")
         } else {
@@ -91,8 +92,8 @@ export default function SignInForm({
                                          options={{
                                              required: "사용자 이름을 입력하여 양식 작성 요청",
                                              minLength: {
-                                                 value: 5,
-                                                 message: "5자 이상 입력"
+                                                 value: 2,
+                                                 message: "2자 이상 입력"
                                              },
                                              maxLength: {
                                                  value: 20,
@@ -111,8 +112,8 @@ export default function SignInForm({
                                          options={{
                                              required: "비밀번호를 입력하여 로그인을 요청",
                                              minLength: {
-                                                 value: 15,
-                                                 message: "15자 이상 입력"
+                                                 value: 2,
+                                                 message: "2자 이상 입력"
                                              },
                                              maxLength: {
                                                  value: 30,

@@ -1,8 +1,6 @@
 import React from "react";
 import "../components/globals.css"
 import "../components/input.css"
-import {Provider} from "react-redux";
-import store from "../tokenStorage/redux/store";
 import TokenContainer from "../tokenStorage/component/tokenContainer";
 import {configureStore} from "@reduxjs/toolkit";
 import TokenReducer from "../tokenStorage/redux/reducer";

@@ -2,7 +2,10 @@
 
 import Summary from "./summary/summary";
 import React, {useEffect, useState} from "react";
-import store from "../../tokenStorage/redux/store";
+import TokenStore from "../../tokenStorage/redux/store";
+import LastChapterStatusStore from "../../postStorage/chapter/redux/store";
+import PostListStatusStore from "../../postStorage/list/redux/store";
+import {useRouter} from "next/navigation";
 
 interface postFormat {
     post_id: number,
@@ -24,31 +27,32 @@ export default function PostList({
     maxlengthInOnePage: number,
     postListUrl: string
 }) {
-    let lastChapterContainer: HTMLInputElement;
-    let postList: postFormat[];
-    //let postsInCurrentPage: postFormat[]
-
     const [postsInCurrentPage, setPostsInCurrentPage] = useState<postFormat[]>(undefined)
-    const [posts, setPosts] = useState<postFormat[]>(undefined)
+    const router = useRouter();
 
     async function getPostList() {
+        let postList: postFormat[];
         let response= await fetch(postListUrl, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": store.getState().value,
+                "Authorization": TokenStore.getState().value,
                 "refresh": sessionStorage.getItem("RefreshToken")
             }
         })
         if (response.status == 200) {
             // todo 리다이렉션 로직 구현
             response.json().then((data: postFormat[]) => {
+                PostListStatusStore.dispatch({
+                    type: 'set/postListStatusStore',
+                    payload: data
+                })
                 postList = data
                 setPostsInCurrentPage(postList.slice((page - 1) * maxlengthInOnePage, (page) * maxlengthInOnePage))
-                setPosts(postsInCurrentPage)
             })
         } else if (response.status == 401) {
             console.log("401") // todo 401 응답 시 로그인 페이지로 리다이렉션
+            router.push("/signin") // 브라우저 history stack 에 url 기록을 남겨서 로그인 성공 시 본 페이지로 돌아올수 있도록 한다
         } else {
             console.log("other")
         }
@@ -58,77 +62,31 @@ export default function PostList({
         getPostList();
     }, []);
     useEffect(() => { // 페이지 이동 시마다 마지막 페이지인지 여부를 확인하는 함수 호출
-        if (postsInCurrentPage != undefined) {
-            console.log(postsInCurrentPage)
+        if (postsInCurrentPage != undefined) { // 초기 랜더링 직후 undefined 상태에서는 실행되지 않음
             IsLastPage(postsInCurrentPage)
         }
     }, [postsInCurrentPage]);
 
     function IsLastPage(PostsInCurrentPage: postFormat[]) {
-        lastChapterContainer = document.getElementById("lastChapterStatus") as HTMLInputElement // layoutFooter 와 공유
-        if (PostsInCurrentPage.length < maxlengthInOnePage) { // 마지막 장
-            lastChapterContainer.value = "1"
+        //lastChapterContainer = document.getElementById("lastChapterStatus") as HTMLInputElement // layoutFooter 와 공유
+        if (PostsInCurrentPage.length < maxlengthInOnePage) { // 마지막 장일 경우 true 반환
+            LastChapterStatusStore.dispatch({
+                type: 'set/lastChapterStatusStore',
+                payload: 1
+            })
         } else {
-            lastChapterContainer.value = "0"
+            LastChapterStatusStore.dispatch({
+                type: 'set/lastChapterStatusStore',
+                payload: 0
+            })
         }
     }
-    /*
-    useEffect(() => { // 페이지 이동 시마다 마지막 페이지인지 여부를 확인하는 함수 호출
-        IsLastPage(postsInCurrentPage)
-    }, [page]);
-    postList = [
-        {
-            id: 1,
-            writer: "me1",
-            email: "who@naver.com",
-            title: "first123456789012345678",
-            content: "somethingOne",
-            created_date: "24-02-07",
-            updated_date: null
-        },
-        {
-            id: 2,
-            writer: "me2",
-            email: "who@naver.com",
-            title: "second",
-            content: "모든 게시글이 로드될 시 게시글 수가 많다면 성능 문제가 발생할수 있으므로 한번에 모든 게시글을 출력하는 대신 특정 개수로 쪼개어 출력하도록 구현",
-            created_date: "24-02-07",
-            updated_date: null
-        },
-        {
-            id: 3,
-            writer: "me3",
-            email: "who@naver.com",
-            title: "third",
-            content: "something",
-            created_date: "24-02-07",
-            updated_date: null
-        },
-        {
-            id: 4,
-            writer: "me4",
-            email: "who@naver.com",
-            title: "four",
-            content: "something",
-            created_date: "24-02-07",
-            updated_date: null
-        },
-        {
-            id: 5,
-            writer: "me5",
-            email: "who@naver.com",
-            title: "five",
-            content: "something",
-            created_date: "24-02-07",
-            updated_date: null
-        },
-    ]*/
     // 한 페이지에 7개의 요약 출력
     // 초기 랜더링 후 data fetch 성공 시 목록 출력
     return (
         <>
             <div className={"grid grid-rows-11"}>
-                {posts != undefined ? posts.map((eachPost) => (
+                {postsInCurrentPage != undefined ? postsInCurrentPage.map((eachPost) => (
                     <Summary key={eachPost.post_id} postInfo={eachPost} maxTitleLength={10} maxContentLength={25}
                              user={user}/>
                 ))
