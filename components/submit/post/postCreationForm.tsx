@@ -40,7 +40,6 @@ export default function PostCreationForm({
                 content: data.content
             }),
         })
-        console.log(response)
         if (response.status == 201) {
             redirect("/" + writer + "/main/1") // 게시글 목록 페이지로 이동
         } else if (response.status == 401) {

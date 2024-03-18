@@ -3,8 +3,10 @@
 import InputElement from "../input/inputElement";
 import InputElementWithVar from "../input/inputElementWithVar"
 import FormForModification from "../modification/formForModification";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {FieldErrors, SubmitErrorHandler, SubmitHandler, useForm} from "react-hook-form";
+import TokenStore from "../../tokenStorage/redux/store";
+import {useRouter} from "next/navigation";
 
 interface emailAddressModificationForm {
     emailAddress: string | undefined,
@@ -14,11 +16,11 @@ interface emailAddressModificationForm {
 export default function emailAddressModificationForm({
     requestUrl,
     verificationUrl,
-    method
+    user
     }:{
     requestUrl: string,
     verificationUrl: string,
-    method: "POST" | "GET" | "PATCH" | "DELETE",
+    user: string
     }) {
     let EmailInputForm: HTMLInputElement;
     let count: number = 0;
@@ -27,6 +29,8 @@ export default function emailAddressModificationForm({
         register,
         handleSubmit
     } = useForm<emailAddressModificationForm>();
+
+    const router = useRouter();
 
     const [requested, setRequested] = useState(0);
 
@@ -39,28 +43,21 @@ export default function emailAddressModificationForm({
             EmailInputForm.value = ""
             setRequested(1);
             console.log(data);
-            /*let response= await fetch(requestUrl, {
+            await fetch(requestUrl, { // 인증번호 요청
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
                     // todo 브라우저에 저장된 토큰을 불러올 수 있도록 하기
-                    "Authorization": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYXJrMiIsImlhdCI6MTcwOTg3MDYzNywiZXhwIjoxNzA5ODcxNjM3fQ.dUdAS-X4eItW7pxuzAu8HWL518c2uJLNQfVlKOdKy3o",
-                    "refresh": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDk4NzA2MzcsImV4cCI6MTcwOTg4MDYzN30.7JoPuT7LxpJAouXhgyBjzZPiShpADGXSAGggopMqiCo",
-                    "Authorization_Modification_Email": "" // 이메일 인증 번호를 보낼때 본인임을 인증하는 토큰
+                    "Authorization": TokenStore.getState().value,
+                    "refresh": sessionStorage.getItem("RefreshToken"),
+                    "Authorization_Modification_Email": sessionStorage.getItem("ForRe_Verification")
                 },
                 body: JSON.stringify({
                     "email": data.emailAddress
                 }),
             })
-            console.log(response)
-            if (response.ok) {
-                alert("ok")
-            } else if (response.status == 401) {
-                alert("nope")
-            } else {
-                alert("other")
-            } */
-        } else {
+            // 인증번호 전송 관련 문제에 관한 대응 로직 부재로 인하여 if else 문은 생략함
+        } else if (requested < 4) {
             if (count < 1) {
                 count += 1;
                 setCustomOfAuthNumber("");
@@ -68,13 +65,13 @@ export default function emailAddressModificationForm({
                 // todo 리다이렉션 등과 같은 요청 후 처리 로직 작성할 것
                 let transformed1 = data.authNumber.slice(0,3);
                 let transformed2 = data.authNumber.slice(3,6);
-                /*let response= await fetch(verificationUrl, {
+                let response= await fetch(verificationUrl, { // 인증번호를 통한 이메일 변경 요청
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",
                         // todo 브라우저에 저장된 토큰을 불러올 수 있도록 하기
-                        "Authorization": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYXJrMiIsImlhdCI6MTcwOTg3MDYzNywiZXhwIjoxNzA5ODcxNjM3fQ.dUdAS-X4eItW7pxuzAu8HWL518c2uJLNQfVlKOdKy3o",
-                        "refresh": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDk4NzA2MzcsImV4cCI6MTcwOTg4MDYzN30.7JoPuT7LxpJAouXhgyBjzZPiShpADGXSAGggopMqiCo",
+                        "Authorization": TokenStore.getState().value,
+                        "refresh": sessionStorage.getItem("RefreshToken"),
                     },
                     body: JSON.stringify({ // 인증번호
                         "num1": transformed1,
@@ -82,17 +79,17 @@ export default function emailAddressModificationForm({
                     }),
                 })
                 console.log(response)
-                if (response.ok) {
-                    alert("ok")
+                if (response.status == 200) {
+                    sessionStorage.removeItem("ForRe_Verification")
+                    router.replace(`/${user}/main/1`)
                 } else if (response.status == 401) {
-                    alert("nope")
-                    setRequested(2)
+                    setRequested(requested + 1)
                 } else {
                     alert("other")
-                }*/
+                }
             } else {
-                // todo 2~3번 이상 인증번호를 통한 인증에 실패하였을 시 처리 영역, 유효성 검증 실패 후 전송 시도할 시 3번 시도 후 해당 영역에서 처리됨
-                setRequested(2) // todo 본 setter 는 401 응답 반환 영역에 작성할 것(인증번호가 일치하지 않을 시)
+                // 2~3번 이상 인증번호를 통한 인증에 실패하였을 시 처리 영역, 유효성 검증 실패 후 전송 시도할 시 3번 시도 후 해당 영역에서 처리됨
+                router.replace(`/${user}/main/1`)
             }
         }
     }
@@ -113,6 +110,13 @@ export default function emailAddressModificationForm({
 
     const [ customOfEmail, setCustomOfEmail ] = useState("");
     const [ customOfAuthNumber, setCustomOfAuthNumber ] = useState("");
+
+    useEffect(() => { // 새로고침 혹은 뒤로가기 등으로 인한 unload 동작 촉발시 작동
+        window.addEventListener("beforeunload", () => {
+            sessionStorage.removeItem("ForRe_Verification") // 새로고침 시 재인증 필요
+            router.back() // 기존 재차 인증 페이지로 돌아감
+        })
+    }, []);
 
     return (
         <FormForModification handleSubmit={handleSubmit(onSubmit, onError)}>

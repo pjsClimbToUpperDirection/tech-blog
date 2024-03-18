@@ -2,8 +2,6 @@ import React from "react";
 import "../components/globals.css"
 import "../components/input.css"
 import TokenContainer from "../tokenStorage/component/tokenContainer";
-import {configureStore} from "@reduxjs/toolkit";
-import TokenReducer from "../tokenStorage/redux/reducer";
 
 export const metadata = {
     title: 'is building..',
@@ -15,9 +13,6 @@ export default function RootLayout({
     }: {
     children: React.ReactNode
 }) {
-    const store = configureStore({ // createStore 대신 사용이 권장됨
-        reducer: TokenReducer
-    });
     return (
         <html lang="en">
             <body className={"bg-black"}>
@@ -29,6 +24,9 @@ export default function RootLayout({
 }
 
 /*
+const store = configureStore({ // createStore 대신 사용이 권장됨
+        reducer: TokenReducer
+    });
 * <Provider store={store}>
                 {children}
             </Provider>*/

@@ -5,18 +5,10 @@ import InputElement from "./input/inputElement";
 import {FieldErrors, SubmitErrorHandler, SubmitHandler, useForm} from "react-hook-form";
 import {useState} from "react";
 import SubmitBtn from "./button/submitBtn";
-import TokenStore from "../../../tokenStorage/redux/store";
 import {useRouter} from "next/navigation";
+import {SignInForm} from "../../../interface/ForSignIn";
+import responseHandler from "../../../function/logIn_out/responseHandler";
 
-
-interface SignInForm {
-    username: string,
-    password: string,
-}
-interface issuedTokens {
-    accessToken: string,
-    refreshToken: string
-}
 
 export default function LoginForm({
     sharedId1,
@@ -46,16 +38,9 @@ export default function LoginForm({
                 "password": data.password
             }),
         })
-        console.log(response)
         if (response.status == 200) {
-            await response.json().then((data: issuedTokens) => {
-                TokenStore.dispatch({
-                    type: "set/accessToken",
-                    payload: data.accessToken
-                })
-                sessionStorage.setItem("RefreshToken", data.refreshToken)
-            }) // todo json 타입으로 정상 변환됨, 브라우저 내부에 임시 토큰 저장하는 로직 구현할 것
-            router.push(`/${data.username}/main/1`)
+            responseHandler(response)
+            router.replace(`/${data.username}/main/1`)
         } else if (response.status == 401) {
             reactiveText("loginFailed")
         } else {

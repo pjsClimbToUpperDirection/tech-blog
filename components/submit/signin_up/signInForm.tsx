@@ -4,32 +4,22 @@ import InputElementWithVar from "../../input/inputElementWithVar";
 import InputElement from "../../input/inputElement";
 import {useState} from "react";
 import {FieldErrors, SubmitErrorHandler, SubmitHandler, useForm} from "react-hook-form";
-import TokenStore from "../../../tokenStorage/redux/store";
-
-interface SignInFormInput {
-    username: string,
-    password: string,
-}
-interface issuedTokens {
-    accessToken: string,
-    refreshToken: string
-}
+import {SignInForm} from "../../../interface/ForSignIn";
+import responseHandler from "../../../function/logIn_out/responseHandler";
 
 // todo 유효성 검증 구현 완료됨, 이후 필요한 로직 구현(요청, 응답, 리디렉션)
 export default function SignInForm({
-    signInUrl,
-    method,
+    signInUrl
     }:{
-    signInUrl: string,
-    method: "POST" | "GET" | "PATCH" | "DELETE",
+    signInUrl: string
 }) {
     const {
         register,
         handleSubmit
-    } = useForm<SignInFormInput>();
+    } = useForm<SignInForm>();
 
 
-    const onSubmit: SubmitHandler<SignInFormInput> = async (data: SignInFormInput) => {
+    const onSubmit: SubmitHandler<SignInForm> = async (data: SignInForm) => {
         console.log(data)
         let response= await fetch(signInUrl, {
             method: "POST",
@@ -43,15 +33,8 @@ export default function SignInForm({
         })
         console.log(response)
         if (response.status == 200) {
-            // todo 리다이렉션 로직 구현
-            response.json().then((data: issuedTokens) => {
-                TokenStore.dispatch({
-                    type: "set/accessToken",
-                    payload: data.accessToken
-                })
-                sessionStorage.setItem("RefreshToken", data.refreshToken)
-            })
-            history.back(); // 본 로그인 폼은 루트 경로가 아닌 다른 경로로 접근을 시도할 시 출력되므로 로그인 성공 시 이전 페이지로 돌아감
+            responseHandler(response)
+            history.back(); // 본 로그인 폼은 루트 경로가 아닌 다른 경로로 접근을 시도할 시 출력되므로 로그인 성공 시 이전 페이지(접근을 시도한 페이지)로 돌아감
         } else if (response.status == 401) {
             setCustomOfButtonText("입력 값 확인 후 재시도")
         } else {
@@ -59,7 +42,7 @@ export default function SignInForm({
         }
     }
 
-    const onError: SubmitErrorHandler<SignInFormInput> = (error: FieldErrors<SignInFormInput>) => {
+    const onError: SubmitErrorHandler<SignInForm> = (error: FieldErrors<SignInForm>) => {
         setCustomOfUsername("")
         setCustomOfPassword("")
         switch (true) {

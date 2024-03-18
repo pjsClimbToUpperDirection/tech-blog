@@ -4,51 +4,57 @@ import React, {useState} from "react";
 import {FieldErrors, SubmitErrorHandler, SubmitHandler, useForm} from "react-hook-form";
 import InputElement from "../input/inputElement";
 import InputElementWithVar from "../input/inputElementWithVar";
+import TokenStore from "../../tokenStorage/redux/store";
+import {useRouter} from "next/navigation";
 
 interface Re_VerificationFormInput {
     passcode: string
+}
+
+interface TokenForRe_Verification {
+    accessToken: string // 재차 인증을 위한 토큰
 }
 
 
 // todo 유효성 검증 구현 완료됨, 이후 필요한 로직 구현(요청, 응답, 리디렉션)
 export default function Re_verificationForm({
     url,
-    method,
-    buttonText
+    buttonText,
+    params
     }:{
     url: string,
-    method: "POST" | "GET" | "PATCH" | "DELETE",
-    buttonText: string
+    buttonText: string,
+    params: { action: string, user: string, what: string, for: string }
 }) {
     const {
         register,
         handleSubmit
     } = useForm<Re_VerificationFormInput>();
 
+    const router = useRouter();
+
     const [ customOfPasscode, setCustomOfPasscode ] = useState("");
 
     const onSubmit: SubmitHandler<Re_VerificationFormInput> = async (data: Re_VerificationFormInput) => {
-        console.log(data)
-        /*let response= await fetch(url, {
-            method: method,
+        let response= await fetch(url, {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                // todo 브라우저에 저장된 토큰을 불러올 수 있도록 하기
-                "Authorization": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYXJrMiIsImlhdCI6MTcwOTg3MDYzNywiZXhwIjoxNzA5ODcxNjM3fQ.dUdAS-X4eItW7pxuzAu8HWL518c2uJLNQfVlKOdKy3o",
-                "refresh": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDk4NzA2MzcsImV4cCI6MTcwOTg4MDYzN30.7JoPuT7LxpJAouXhgyBjzZPiShpADGXSAGggopMqiCo"
+                "Authorization": TokenStore.getState().value,
+                "refresh": sessionStorage.getItem("RefreshToken"),
             },
             body: JSON.stringify({
-                "password": passcode
+                "password": data.passcode
             }),
         })
-        console.log(response)
         if (response.status == 200) {
-            response.json().then((data) => console.log(data)) // todo json 타입으로 정상 변환됨, 브라우저 내부에 임시 토큰 저장하는 로직 구현할 것
+            response.json().then((data: TokenForRe_Verification) => sessionStorage.setItem("ForRe_Verification", data.accessToken))
+            router.push(`/${params.action}/${params.what}/${params.for}/${params.user}`)
         } else if (response.status == 401) {
-            alert("nope") // todo 비밀번호가 유효하지 않다는 걸 사용자에게 알리기
+            setCustomOfPasscode("암호가 올바른지 다시 확인")
         } else {
-            alert("other") // todo 500번대 서버 에러일 가능성 농후, 적절히 대처
-        } */
+            setCustomOfPasscode("암호가 올바른지 다시 확인")
+        }
     }
 
     const onError: SubmitErrorHandler<Re_VerificationFormInput> = (error: FieldErrors<Re_VerificationFormInput>) => {
@@ -58,15 +64,15 @@ export default function Re_verificationForm({
     return (
         <form className={"h-full grid grid-rows-2"} onSubmit={handleSubmit(onSubmit, onError)}>
             <div className={"row-span-1"}>
-                <InputElementWithVar type={"text"}
+                <InputElementWithVar type={"password"}
                                      placeholder={"/confirm/password%_"}
                                      value={undefined}
                                      id={"passcode"}
                                      options={{
                                          required: "암호를 다시 입력하여 확인 절차 이행",
                                          minLength: {
-                                         value: 15,
-                                         message: "15자 이상 입력"
+                                         value: 3,
+                                         message: "3자 이상 입력"
                                      },
                                          maxLength: {
                                          value: 30,
