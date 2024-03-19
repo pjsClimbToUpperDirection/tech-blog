@@ -56,7 +56,7 @@ export default function MainContent({
             info: undefined,
             content: undefined,
             linkContent: "본인 확인 후 삭제 페이지로 이동..",
-            href: "../confirmation/" + user + "/deletion/account/deletion"
+            href: "../confirmation/" + user + "/deletion/account/all"
         },
         {
             id: 4,
@@ -75,13 +75,13 @@ export default function MainContent({
         let last_modified = sessionStorage.getItem("last_modified");
         setEmailAddress(email)
         if (last_modified != "null") { // 최종 수정일자 존재 (sessionStorage 저장시 문자열 자체로 저장되므로 다음과 같이 문자열 그대로 null 여부를 확인해야 한다)
-            if (last_modified.slice(0, -2) == "00") { // 비밀번호 수정일
+            if (last_modified.slice(15, 17) == "00") { // 비밀번호 수정일
                 setLast_created_or_modified({
                     case: "비밀번호",
                     type: "수정일자",
                     date: last_modified.slice(0, 8)
                 })
-            } else if (last_modified.slice(0, -2) == "01") {
+            } else if (last_modified.slice(15, 17) == "01") { // 이메일 주소 수정알
                 setLast_created_or_modified({
                     case: "이메일 주소",
                     type: "수정일자",

@@ -2,35 +2,36 @@
 
 import React from "react";
 import InputElement from "../input/inputElement";
+import TokenStore from "../../tokenStorage/redux/store";
+import {useRouter} from "next/navigation";
 
 export default function AccountDeletionForm({
     user,
-    requestUrl,
-    method
+    requestUrl
     }:{
     user: string,
     requestUrl: string
-    method: "POST" | "GET" | "PATCH" | "DELETE",
 }) {
-    async function generateRequest(event) {
-        event.preventDefault();
-        console.log("delete")
-        /*let response= await fetch(requestUrl, {
-            method: method,
-            headers: {
-                "Content-Type": "application/json",
-                // 인증 토큰, 임시 토큰 담아서 요청
-            },
-            body: JSON.stringify({}),
-        })
-        console.log(response)
-        if (response.ok) {
-            alert("ok") // todo 성공 시 루트 페이지로 리다이렉션
-        } else if (response.status == 401) {
-            alert("nope") // todo 요청 토큰이 유효하지 않을 시 confirmation 이하 영역으로 이동, 암호 작성 및 토큰 발급 재진행
-        } else {
-            alert("other") // todo 기타 오류 대응 로직 구현
-        } */
+    const router = useRouter();
+
+    async function generateRequest(e) {
+        e.preventDefault();
+        if (window.confirm("계정 삭제를 요청하시겠습니까? 이 동작은 취소할 수 없습니다.")) {
+            let response= await fetch(requestUrl, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": TokenStore.getState().value,
+                    "refresh": sessionStorage.getItem("RefreshToken"),
+                    "Authorization_Deletion_AC": sessionStorage.getItem("ForRe_Verification")
+                }
+            })
+            if (response.status == 200) {
+                router.replace("/logout");
+            } else if (response.status == 401) { // 토큰 만료 (여기서는 임시 토큰)
+                router.back(); // 재인증 페이지로 되돌아감
+            }
+        }
     }
 
     return (

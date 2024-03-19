@@ -1,12 +1,12 @@
 "use client"
 
 import Full_height_Form from "../../modification/full_height_Form";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import InputElementWithVar from "../../input/inputElementWithVar";
 import {FieldErrors, SubmitErrorHandler, SubmitHandler, useForm} from "react-hook-form";
 import TokenStore from "../../../tokenStorage/redux/store";
 import MainContentArea from "./content/mainContentArea";
-import {redirect} from "next/navigation";
+import {useRouter} from "next/navigation";
 
 // todo 추후 postModificationForm 과 공통된 요소 통합하려 시도
 interface PostCreationFormInput {
@@ -20,13 +20,20 @@ export default function PostCreationForm({
     postCreationUrl: string,
     writer: string
 }) {
+    useEffect(() => {
+        if (TokenStore.getState().value == undefined || sessionStorage.getItem("RefreshToken") == null) {
+            router.push("/signin") // 인증 관련 요소가 부재할 시 재 로그인 필요
+        }
+    }, []);
+
     const {
         register,
         handleSubmit
     } = useForm<PostCreationFormInput>();
 
+    const router = useRouter();
+
     const onSubmit: SubmitHandler<PostCreationFormInput> = async (data: PostCreationFormInput) => {
-        console.log(data)
         let response= await fetch(postCreationUrl, {
             method: "POST",
             headers: {
@@ -35,17 +42,14 @@ export default function PostCreationForm({
                 "refresh": sessionStorage.getItem("RefreshToken")
             },
             body: JSON.stringify({
-                writer: writer,
                 title: data.title,
                 content: data.content
             }),
         })
         if (response.status == 201) {
-            redirect("/" + writer + "/main/1") // 게시글 목록 페이지로 이동
+            router.replace("/" + writer + "/main/1") // 게시글 목록 페이지로 이동
         } else if (response.status == 401) {
-            // todo 로그인 폼으로 이동, 이미 입력된 게시글은 일시 저장하는 로직 구현하기
-        } else {
-            // todo 로그인 폼으로 이동, 이미 입력된 게시글은 일시 저장하는 로직 구현하기
+            router.push("/signin")
         }
     }
 
@@ -66,6 +70,7 @@ export default function PostCreationForm({
 
     const [ customOfTitle, setCustomOfTitle ] = useState("");
     const [ customOfContent, setCustomOfContent ] = useState("");
+
 
     return (
         <Full_height_Form handleSubmit={handleSubmit(onSubmit, onError)}>

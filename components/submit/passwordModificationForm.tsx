@@ -35,7 +35,6 @@ export default function PasswordModificationForm({
             method: method,
             headers: {
                 "Content-Type": "application/json",
-                // todo 브라우저에 저장된 토큰을 불러올 수 있도록 하기
                 "Authorization": TokenStore.getState().value,
                 "refresh": sessionStorage.getItem("RefreshToken"),
                 "Authorization_Modification_PW": sessionStorage.getItem("ForRe_Verification")
@@ -44,7 +43,7 @@ export default function PasswordModificationForm({
                 "password": data.repeat
             }),
         })
-        if (response.status == 200) {
+        if (response.status == 204) {
              sessionStorage.removeItem("ForRe_Verification")
              router.replace("/logout")
         } else if (response.status == 401) {

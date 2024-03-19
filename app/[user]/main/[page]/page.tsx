@@ -9,7 +9,7 @@ export default function Page({ params }: { params: { user: string, page: number 
                 <PostList
                     page={params.page}
                     user={params.user}
-                    maxlengthInOnePage={3}
+                    maxlengthInOnePage={7}
                     postListUrl={postListUrl}/>
             </Layout>
         </>

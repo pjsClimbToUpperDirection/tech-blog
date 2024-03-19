@@ -7,7 +7,6 @@ import {FieldErrors, SubmitErrorHandler, SubmitHandler, useForm} from "react-hoo
 import {SignInForm} from "../../../interface/ForSignIn";
 import responseHandler from "../../../function/logIn_out/responseHandler";
 
-// todo 유효성 검증 구현 완료됨, 이후 필요한 로직 구현(요청, 응답, 리디렉션)
 export default function SignInForm({
     signInUrl
     }:{
@@ -17,7 +16,6 @@ export default function SignInForm({
         register,
         handleSubmit
     } = useForm<SignInForm>();
-
 
     const onSubmit: SubmitHandler<SignInForm> = async (data: SignInForm) => {
         console.log(data)
@@ -31,13 +29,10 @@ export default function SignInForm({
                 "password": data.password
             }),
         })
-        console.log(response)
         if (response.status == 200) {
             responseHandler(response)
             history.back(); // 본 로그인 폼은 루트 경로가 아닌 다른 경로로 접근을 시도할 시 출력되므로 로그인 성공 시 이전 페이지(접근을 시도한 페이지)로 돌아감
-        } else if (response.status == 401) {
-            setCustomOfButtonText("입력 값 확인 후 재시도")
-        } else {
+        } else if (response.status == 400) {
             setCustomOfButtonText("입력 값 확인 후 재시도")
         }
     }
@@ -75,8 +70,8 @@ export default function SignInForm({
                                          options={{
                                              required: "사용자 이름을 입력하여 양식 작성 요청",
                                              minLength: {
-                                                 value: 2,
-                                                 message: "2자 이상 입력"
+                                                 value: 3,
+                                                 message: "3자 이상 입력"
                                              },
                                              maxLength: {
                                                  value: 20,
@@ -95,8 +90,8 @@ export default function SignInForm({
                                          options={{
                                              required: "비밀번호를 입력하여 로그인을 요청",
                                              minLength: {
-                                                 value: 2,
-                                                 message: "2자 이상 입력"
+                                                 value: 15,
+                                                 message: "15자 이상 입력"
                                              },
                                              maxLength: {
                                                  value: 30,

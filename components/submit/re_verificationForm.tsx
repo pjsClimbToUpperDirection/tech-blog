@@ -16,7 +16,6 @@ interface TokenForRe_Verification {
 }
 
 
-// todo 유효성 검증 구현 완료됨, 이후 필요한 로직 구현(요청, 응답, 리디렉션)
 export default function Re_verificationForm({
     url,
     buttonText,
@@ -51,8 +50,6 @@ export default function Re_verificationForm({
             response.json().then((data: TokenForRe_Verification) => sessionStorage.setItem("ForRe_Verification", data.accessToken))
             router.push(`/${params.action}/${params.what}/${params.for}/${params.user}`)
         } else if (response.status == 401) {
-            setCustomOfPasscode("암호가 올바른지 다시 확인")
-        } else {
             setCustomOfPasscode("암호가 올바른지 다시 확인")
         }
     }

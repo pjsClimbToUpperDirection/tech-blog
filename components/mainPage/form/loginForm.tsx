@@ -3,7 +3,7 @@
 import Link from "next/link";
 import InputElement from "./input/inputElement";
 import {FieldErrors, SubmitErrorHandler, SubmitHandler, useForm} from "react-hook-form";
-import {useState} from "react";
+import React, {useState} from "react";
 import SubmitBtn from "./button/submitBtn";
 import {useRouter} from "next/navigation";
 import {SignInForm} from "../../../interface/ForSignIn";
@@ -129,8 +129,8 @@ export default function LoginForm({
                                     options={{
                                         required: "암호 입력",
                                         minLength: {
-                                            value: 1,
-                                            message: "1자 이상 입력"
+                                            value: 15,
+                                            message: "15자 이상 입력"
                                         },
                                         maxLength: {
                                             value: 30,
@@ -150,8 +150,17 @@ export default function LoginForm({
                         </div>
                     </form>
                 </div>
-                <div className={"w-full h-full row-span-1 text-white px-10 py-4"}>
-                    <p>아직 소유한 계정이 없을 시 <Link href={"/signup"} className={"text-orange-500"} prefetch={false}>회원가입</Link></p>
+                <div className={"w-full h-full row-span-1 text-white px-10 py-4 grid grid-rows-2"}>
+                    <div className={"row-span-1"}>
+                        <p className={"text-slate-300"}>
+                            <Link href={"/recovery"} className={"text-fuchsia-300"}>암호를 잊어버리셨나요?</Link>
+                        </p>
+                    </div>
+                    <div className={"row-span-1"}>
+                        <p>
+                            아직 소유한 계정이 없을 시 <Link href={"/signup"} className={"text-orange-500"} prefetch={false}>회원가입</Link>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

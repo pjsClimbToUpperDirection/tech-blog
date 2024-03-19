@@ -12,8 +12,6 @@ interface PostModificationFormInput {
     content: string
 }
 
-// todo displayedValue 값은 수정하고자 하는 기존 게시글 제목을 값으로 대입할수 있도록 할 것,
-// todo 제목은 수정할 수 없으며 본문 수정 후 기존 제목과 함께 서버에 수정 요청
 export default function PostModificationForm({
     writer,
     title,
@@ -31,7 +29,6 @@ export default function PostModificationForm({
     const router = useRouter();
 
     const onSubmit: SubmitHandler<PostModificationFormInput> = async (data: PostModificationFormInput) => {
-        console.log(data)
         let response= await fetch(modificationUrl, {
             method: "PATCH",
             headers: {
@@ -44,13 +41,10 @@ export default function PostModificationForm({
                 content: data.content
             }),
         })
-        console.log(response)
         if (response.status == 200) {
             router.push(`/${writer}/main/1`) // 게시글 목록 페이지로 이동
-        } else if (response.status == 401) {
-            // todo 로그인 폼으로 이동, 이미 입력된 게시글은 일시 저장하는 로직 구현하기
         } else {
-            // todo 로그인 폼으로 이동, 이미 입력된 게시글은 일시 저장하는 로직 구현하기
+            setCustomOfContent("문제 지속될 시 재 로그인")
         }
     }
 

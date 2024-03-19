@@ -41,7 +41,6 @@ export default function PostList({
             }
         })
         if (response.status == 200) {
-            // todo 리다이렉션 로직 구현
             response.json().then((data: postFormat[]) => {
                 PostListStatusStore.dispatch({
                     type: 'set/postListStatusStore',
@@ -51,10 +50,9 @@ export default function PostList({
                 setPostsInCurrentPage(postList.slice((page - 1) * maxlengthInOnePage, (page) * maxlengthInOnePage))
             })
         } else if (response.status == 401) {
-            console.log("401") // todo 401 응답 시 로그인 페이지로 리다이렉션
             router.push("/signin") // 브라우저 history stack 에 url 기록을 남겨서 로그인 성공 시 본 페이지로 돌아올수 있도록 한다
         } else {
-            console.log("other")
+            alert("서버 내부 오류")
         }
     }
     useEffect(() => {
@@ -81,11 +79,11 @@ export default function PostList({
             })
         }
     }
-    // 한 페이지에 7개의 요약 출력
     // 초기 랜더링 후 data fetch 성공 시 목록 출력
+    // 한 페이지에 maxlengthInOnePage 값만큼의 요약 출력
     return (
         <>
-            <div className={"grid grid-rows-11"}>
+            <div className={"grid grid-rows-9"}>
                 {postsInCurrentPage != undefined ? postsInCurrentPage.map((eachPost) => (
                     <Summary key={eachPost.post_id} postInfo={eachPost} maxTitleLength={10} maxContentLength={25}
                              user={user}/>
