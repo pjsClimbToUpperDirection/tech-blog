@@ -18,7 +18,6 @@ export default function SignInForm({
     } = useForm<SignInForm>();
 
     const onSubmit: SubmitHandler<SignInForm> = async (data: SignInForm) => {
-        console.log(data)
         let response= await fetch(signInUrl, {
             method: "POST",
             headers: {

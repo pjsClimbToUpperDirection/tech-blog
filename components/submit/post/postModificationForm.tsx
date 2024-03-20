@@ -1,12 +1,12 @@
 "use client"
 
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import InputElementForDisplay from "../../input/inputElementForDisplay";
 import Full_height_Form from "../../modification/full_height_Form";
 import TokenStore from "../../../tokenStorage/redux/store";
 import MainContentArea from "./content/mainContentArea";
 import {FieldErrors, SubmitErrorHandler, SubmitHandler, useForm} from "react-hook-form";
-import {redirect, useRouter} from "next/navigation";
+import {useRouter} from "next/navigation";
 
 interface PostModificationFormInput {
     content: string
@@ -28,6 +28,8 @@ export default function PostModificationForm({
 
     const router = useRouter();
 
+    const usableTitle = decodeURIComponent(title)
+
     const onSubmit: SubmitHandler<PostModificationFormInput> = async (data: PostModificationFormInput) => {
         let response= await fetch(modificationUrl, {
             method: "PATCH",
@@ -37,7 +39,7 @@ export default function PostModificationForm({
                 "refresh": sessionStorage.getItem("RefreshToken")
             },
             body: JSON.stringify({
-                title: title,
+                title: usableTitle,
                 content: data.content
             }),
         })
@@ -66,7 +68,7 @@ export default function PostModificationForm({
                 <div className={"border-b-2 border-dashed w-full h-full flex flex-col"}>
                     <div className={"w-full h-full flex-1 grid content-center"}>
                         <div className={"w-full h-fit"}>
-                            <InputElementForDisplay displayedValue={title} alertWithFog={undefined} custom={"m-3 titleForModification"}/>
+                            <InputElementForDisplay displayedValue={usableTitle} alertWithFog={undefined} custom={"m-3 titleForModification"}/>
                         </div>
                     </div>
                     <div className={"w-full h-fit text-white grid justify-items-center"}>

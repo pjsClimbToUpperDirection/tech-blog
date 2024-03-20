@@ -131,6 +131,10 @@ export default function SignUpForm({
                                              alias={"username"}
                                              options={{
                                                  required: "사용자 이름은 필수 요소입니다.",
+                                                 pattern: {
+                                                     value: /[a-zA-Z0-9]/,
+                                                     message: "영문, 숫자 이외에는 허용되지 않음"
+                                                 },
                                                  minLength: {
                                                      value: 3,
                                                      message: "3자 이상 입력"

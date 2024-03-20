@@ -28,11 +28,12 @@ export default function PostDetail({
 }) {
     const [renderedPost, setRenderedPost] = useState<postFormat>(undefined);
     const router = useRouter();
+    const usableTitle = decodeURIComponent(title)
 
     function getPostList() {
         const Posts: postFormat[] = PostListStatusStore.getState().value
         if (Posts != undefined) {
-            setRenderedPost(Posts.find((post) => post.title == title))
+            setRenderedPost(Posts.find((post) => post.title == usableTitle))
         }
     }
 
@@ -47,7 +48,7 @@ export default function PostDetail({
                     "refresh": sessionStorage.getItem("RefreshToken")
                 },
                 body: JSON.stringify({
-                    title: title
+                    title: usableTitle
                 }),
             })
             if (response.status == 204) {
@@ -66,11 +67,11 @@ export default function PostDetail({
             {renderedPost != undefined ?
                 <Full_height_Form handleSubmit={generateRequest}>
                     <div className={"h-[90px] p-2 border-b-2 border-gray-200 grid content-end justify-center"}>
-                        <InputElementForDisplay displayedValue={title} alertWithFog={undefined} custom={"w-0 h-0"}/>
-                        <h2 className={"text-[28px] font-bold"}>{title.length > 20 ? (
-                            <p>{title.substring(0, 20)}...</p>
+                        <InputElementForDisplay displayedValue={usableTitle} alertWithFog={undefined} custom={"w-0 h-0"}/>
+                        <h2 className={"text-[28px] font-bold"}>{usableTitle.length > 20 ? (
+                            <p>{usableTitle.substring(0, 20)}...</p>
                         ) : (
-                            <p>{title}</p>
+                            <p>{usableTitle}</p>
                         )}</h2>
                     </div>
                     <div className={"h-[40px] my-[5px]"}>
@@ -78,7 +79,7 @@ export default function PostDetail({
                             최종 작성일: {renderedPost.updated_date != null ? renderedPost.updated_date : renderedPost.created_date}
                         </div>
                         <div className={"text-blue-200"}>
-                            <Link href={`/${writer}/modification/post/${title}`} prefetch={false}>눌러서 게시글을 수정...</Link>
+                            <Link href={`/${writer}/modification/post/${usableTitle}`} prefetch={false}>눌러서 게시글을 수정...</Link>
                         </div>
                     </div>
                     <div className={"flex-auto h-full py-4"}>
