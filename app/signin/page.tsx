@@ -3,7 +3,7 @@ import React from "react";
 import SignInForm from "../../components/submit/signin_up/signInForm";
 
 export default function signIn() {
-    let url = "http://localhost:1701/api/v1/auth-api/issue"
+    let url = process.env.BACKEND_ORIGIN + "/api/v1/auth-api/issue"
     return (
         <div className={"grid justify-items-center h-screen min-h-[900px]"}>
             <div

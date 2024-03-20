@@ -2,7 +2,7 @@ import Layout from "../../../../../components/layout/layout";
 import PostDetail from "../../../../../components/detail/postDetail";
 
 export default function PostDetailPage({ params }:{ params: { user: string, title: string } }) {
-    const deletionUrl = "http://localhost:1701/api/v1/delete-api/deletePost"
+    const deletionUrl = process.env.BACKEND_ORIGIN + "/api/v1/delete-api/deletePost"
     return (
         <Layout customForRoot={""}>
             <PostDetail

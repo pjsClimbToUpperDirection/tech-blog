@@ -4,8 +4,9 @@ import "../components/input.css"
 import TokenContainer from "../tokenStorage/component/tokenContainer";
 
 export const metadata = {
-    title: 'is building..',
+    title: 'first, it has been constructed',
     description: 'for my ability',
+    robots: "noindex, nofollow" // 검색엔진에서 본인의 사이트가 노출되지 않도록 설정함
 }
 
 export default function RootLayout({
@@ -22,11 +23,3 @@ export default function RootLayout({
         </html>
     )
 }
-
-/*
-const store = configureStore({ // createStore 대신 사용이 권장됨
-        reducer: TokenReducer
-    });
-* <Provider store={store}>
-                {children}
-            </Provider>*/

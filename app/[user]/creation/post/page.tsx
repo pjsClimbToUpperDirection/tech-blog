@@ -6,7 +6,7 @@ export default function PostCreation({
     }:{
     params: { user: string }
 }) {
-    const postCreationUrl: string = "http://localhost:1701/api/v1/post-api/uploadPost"
+    const postCreationUrl: string = process.env.BACKEND_ORIGIN + "/api/v1/post-api/uploadPost"
     // Layout 이하 요소만 클라이언트 측에서 랜더링
     return (
         <Layout customForRoot={""}>

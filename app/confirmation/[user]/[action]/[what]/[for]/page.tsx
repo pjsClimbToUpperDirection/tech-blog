@@ -7,7 +7,7 @@ export default function throughPassword({
     params: { action: string, user: string, what: string, for: string }
     }) {
     // todo Re_verificationForm 내부에 경로 파라미터를 이용하여 목표한 폼을 반환하는 경로를 구성하는 로직 작성할 것
-    let url = "http://localhost:1701/api/v1/auth-api/verification"
+    let url = process.env.BACKEND_ORIGIN + "/api/v1/auth-api/verification"
     return (
         <div className={"w-full h-screen min-h-[900px]"}>
             <div className={"grid justify-items-center h-full"}>

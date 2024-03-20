@@ -5,7 +5,7 @@ import LoginForm from "../components/mainPage/form/loginForm";
 import "../components/mainPage/animation/rendering.css"
 
 export default function MainPage() {
-    const loginUrl: string = "http://localhost:1701/api/v1/auth-api/issue"
+    const loginUrl: string = process.env.BACKEND_ORIGIN + "/api/v1/auth-api/issue"
 
     const commonId: string = "common";
     const sharedOne: string = "one";

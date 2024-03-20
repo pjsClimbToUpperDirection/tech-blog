@@ -3,8 +3,8 @@ import React from "react";
 import AccountRecovery from "../../components/submit/accountRecovery";
 
 export default function Recovery() {
-    let urlForAuthNumber = "http://localhost:1701/api/v1/account-api/recovery/account/request"
-    let urlForMainRequest = "http://localhost:1701/api/v1/account-api/recovery/account/verification"
+    let urlForAuthNumber = process.env.BACKEND_ORIGIN + "/api/v1/account-api/recovery/account/request"
+    let urlForMainRequest = process.env.BACKEND_ORIGIN + "/api/v1/account-api/recovery/account/verification"
     return (
         <div className={"grid justify-items-center h-screen min-h-[900px]"}>
             <div

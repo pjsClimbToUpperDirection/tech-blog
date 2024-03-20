@@ -3,8 +3,8 @@ import React from "react";
 import SignUpForm from "../../components/submit/signin_up/signUpForm";
 
 export default function signUp() {
-    let requestUrl = "http://localhost:1701/api/v1/account-api/register/request"
-    let verificationUrl = "http://localhost:1701/api/v1/account-api/register/verification"
+    let requestUrl = process.env.BACKEND_ORIGIN + "/api/v1/account-api/register/request"
+    let verificationUrl = process.env.BACKEND_ORIGIN + "/api/v1/account-api/register/verification"
     return (
         <div className={"grid justify-items-center h-screen min-h-[900px]"}>
             <div
